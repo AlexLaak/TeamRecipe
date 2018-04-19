@@ -21,9 +21,12 @@ public class RecipeDB {
         Statement stmt = connection.createStatement();
         
         //stmt.executeUpdate("DROP TABLE IF EXISTS test");
-        //stmt.executeUpdate("CREATE TABLE test (name varchar(255),pena varchar(255))"); 
-        stmt.executeUpdate("INSERT INTO test VALUES ('testing','again')");
-        ResultSet rs = stmt.executeQuery("SELECT * FROM test");
+        //stmt.executeUpdate("CREATE TABLE users (username varchar(255), password varchar(255), allergies varchar(1000))");
+        //stmt.executeUpdate("CREATE TABLE recipes (name varchar(255), ingredients varchar(1000), instructions varchar(10000), tags varchar(1000))");
+        //stmt.executeUpdate("CREATE TABLE test (name varchar(255),pena varchar(255))");
+        //stmt.executeUpdate("INSERT INTO test VALUES ('testing',('again','asd'))");
+        //stmt.executeUpdate("INSERT INTO users VALUES ('pena', 'pena', ('peanut','fish'))");    
+        ResultSet rs = stmt.executeQuery("SELECT * FROM users");
         
         
         
@@ -33,10 +36,11 @@ public class RecipeDB {
                 "  FROM information_schema.tables\n" +
                 " WHERE table_schema='public'\n" +
                 "   AND table_type='BASE TABLE';");
-        
         */
+        
         while (rs.next()) {
-            System.out.println(rs.getString(1));
+            //rs.getString(1),rs.getString(2)....
+            System.out.println(rs.getString(3));
             //System.out.println("Read from DB: " + rs.getTimestamp("tick"));
         }
        
