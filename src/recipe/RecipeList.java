@@ -4,21 +4,23 @@
  * and open the template in the editor.
  */
 package recipe;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.sql.*;
 import java.util.ArrayList;
 /**
  *
- * @author macbookpro
+ * @author TeamRecipe
  */
 public class RecipeList {
-    private String id;
+    private int id;
     private String name;
     private String ingredients;
     private String instructions;
-    public String getId() {
+    public int getId() {
         return id;
     }
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
     public String getName() {
@@ -40,21 +42,31 @@ public class RecipeList {
         this.instructions = instructions;
     }
     
-    public static ArrayList<RecipeList> getAllRecipes() throws ClassNotFoundException, SQLException {
-    Connection conn = DBConnection.getDBConnection().getConnection();
-    Statement stm = conn.createStatement();
-    String sql = "SELECT * from recipes;";
-    ResultSet rst = stm.executeQuery(sql);
-    ArrayList<RecipeList> recipeList = new ArrayList<>();
-    while (rst.next()) {
-        RecipeList recipe = new RecipeList(rst.getString("id"), rst.getString("name"), rst.getString("ingredients"), rst.getString("instructions"));
-        recipe.setId(rst.getString("id"));
-        recipe.setName(rst.getString("name"));
-        recipe.setIngredients(rst.getString("ingredients"));
-        recipe.setInstructions(rst.getString("instructions"));
-        recipeList.add(recipe);
-    }
-    return customerList;
-}
+    private static Connection getConnection() throws URISyntaxException, SQLException {
+        URI dbUri = new URI("postgres://hkullkvwogqmsk:57f03e071224c52d64f523e55c0105096f73c5e1fc5519ac6e4af2461419ebdd@ec2-54-217-217-142.eu-west-1.compute.amazonaws.com:5432/d1ur8rbqa8ddlp");
+        String username = dbUri.getUserInfo().split(":")[0];
+        String password = dbUri.getUserInfo().split(":")[1];
+        String dbUrl = "jdbc:postgresql://" + dbUri.getHost() + dbUri.getPath() + "?ssl=true&sslfactory=org.postgresql.ssl.NonValidatingFactory";
 
+        return DriverManager.getConnection(dbUrl, username, password);
+    }
+    
+    
+    public static ArrayList<RecipeList> getAllRecipes() throws ClassNotFoundException, SQLException, URISyntaxException {
+        Connection connection = getConnection();
+        Statement stm = connection.createStatement();
+        String sql = "SELECT * from recipes;";
+        ResultSet rst = stm.executeQuery(sql);
+        ArrayList<RecipeList> recipeList = new ArrayList<>();
+        while (rst.next()) {
+            RecipeList recipe;
+            recipe = new RecipeList();
+            recipe.setId(rst.getInt("id"));
+            recipe.setName(rst.getString("name"));
+            recipe.setIngredients(rst.getString("ingredients"));
+            recipe.setInstructions(rst.getString("instructions"));
+            recipeList.add(recipe);
+        }
+        return recipeList;
+    }
 }
