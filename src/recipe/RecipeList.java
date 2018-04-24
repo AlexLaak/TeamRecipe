@@ -82,15 +82,17 @@ public class RecipeList {
         Scanner s = new Scanner(System.in);
         System.out.println("Name:");
         String name = s.nextLine();
-        System.out.println("Ingredients (Separated with ,):");
+        System.out.println("Ingredients (eg. (2kg_bacon,3_egg):");
         String ingre = s.nextLine();
         System.out.println("Instructions:");
         String instru = s.nextLine();
         System.out.println("Tags (Separated with ,):");
         String tags = s.nextLine();
         Recipe recipe;
-        recipe = new Recipe();
+        recipe = new Recipe(name, tags, ingre, instru);
+        recipes.add(recipe);
         
+        System.out.println("INSERT INTO recipes (name,ingredients,instructions,tags) VALUES ('" + name + "'," + ingre + ",'" + instru + "'," + tags);
     }
 
     public static ArrayList<Recipe> getAllRecipes() throws ClassNotFoundException, SQLException, URISyntaxException { // run this once on program startup to get all recipes from database to local which will speed up the recipe searches
