@@ -80,21 +80,24 @@ public class RecipeList {
         return null;
     }
     
-    public void addRecipe() throws URISyntaxException, SQLException{
+    public void addRecipe() throws ClassNotFoundException, SQLException, URISyntaxException{
         Connection connection = getConnection();
         Statement stm = connection.createStatement();
         Scanner s = new Scanner(System.in);
         System.out.println("Name:");
         String name = s.nextLine();
-        System.out.println("Ingredients (Separated with ,):");
+        System.out.println("Ingredients e.g. (2kg_bacon,3_egg):");
         String ingre = s.nextLine();
         System.out.println("Instructions:");
         String instru = s.nextLine();
-        System.out.println("Tags (Separated with ,):");
+        System.out.println("Tags e.g. (finnish,easy):");
         String tags = s.nextLine();
-        Recipe recipe;
-        recipe = new Recipe();
+        /*Recipe recipe;
+        recipe = new Recipe(name, tags, ingre, instru);
+        recipes.add(recipe);*/
         
+        stm.executeUpdate("INSERT INTO recipes (name,ingredients,instructions,tags) VALUES ('" + name + "','" + ingre + "','" + instru + "','" + tags + "')");
+        recipes = getAllRecipes();
     }
     
     @Override
@@ -118,6 +121,7 @@ public class RecipeList {
             recipe.setName(rst.getString("name"));
             recipe.setIngredients(rst.getString("ingredients"));
             recipe.setInstructions(rst.getString("instructions"));
+            recipe.setTags(rst.getString("tags"));
             recipeList.add(recipe);
         }
         connection.close();
