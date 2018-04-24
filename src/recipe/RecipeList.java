@@ -92,6 +92,14 @@ public class RecipeList {
         recipe = new Recipe();
         
     }
+    
+    @Override
+    public String toString(){
+        for (Recipe recipe : recipes) {
+            System.out.println(recipe);
+        }
+        return "";
+    }
 
     public static ArrayList<Recipe> getAllRecipes() throws ClassNotFoundException, SQLException, URISyntaxException { // run this once on program startup to get all recipes from database to local which will speed up the recipe searches
         Connection connection = getConnection();

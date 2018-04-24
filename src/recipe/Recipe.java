@@ -55,4 +55,9 @@ public class Recipe {
     public void setInstructions(String instructions) {
         this.instructions = instructions;
     }
+    
+    @Override
+    public String toString(){
+        return this.id + " " + this.name + " " + this.tags + " " + this.ingredients + " " + this.instructions;
+    }
 }
