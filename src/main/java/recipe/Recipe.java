@@ -1,4 +1,6 @@
-package recipe;
+package main.java.recipe;
+
+
 
 /*
  * To change this license header, choose License Headers in Project Properties.
