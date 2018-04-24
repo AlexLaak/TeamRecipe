@@ -12,7 +12,7 @@ import java.sql.*;
  *
  * @author Team Recipe
  */
-public class RecipeDB {
+public class Main {
 
     public static void main(String[] args) throws Exception {
         
@@ -26,7 +26,8 @@ public class RecipeDB {
         //stmt.executeUpdate("CREATE TABLE test (name varchar(255),pena varchar(255))");
         //stmt.executeUpdate("INSERT INTO test VALUES ('testing',('again','asd'))");
         //stmt.executeUpdate("INSERT INTO users VALUES ('pena', 'pena', ('peanut','fish'))");    
-        ResultSet rs = stmt.executeQuery("SELECT * FROM users");
+        //ResultSet rs = stmt.executeQuery("SELECT * FROM users");
+        
         
         
         
@@ -36,13 +37,17 @@ public class RecipeDB {
                 "  FROM information_schema.tables\n" +
                 " WHERE table_schema='public'\n" +
                 "   AND table_type='BASE TABLE';");
-        */
+*/
         
+        
+        /*
         while (rs.next()) {
             //rs.getString(1),rs.getString(2)....
-            System.out.println(rs.getString(3));
+            System.out.println(rs.getString(1));
             //System.out.println("Read from DB: " + rs.getTimestamp("tick"));
         }
+*/
+
        
     }
     
