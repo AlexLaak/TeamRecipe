@@ -13,6 +13,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 /**
  *
@@ -73,6 +74,23 @@ public class RecipeList {
             }
         }
         return null;
+    }
+    
+    public void addRecipe() throws URISyntaxException, SQLException{
+        Connection connection = getConnection();
+        Statement stm = connection.createStatement();
+        Scanner s = new Scanner(System.in);
+        System.out.println("Name:");
+        String name = s.nextLine();
+        System.out.println("Ingredients (Separated with ,):");
+        String ingre = s.nextLine();
+        System.out.println("Instructions:");
+        String instru = s.nextLine();
+        System.out.println("Tags (Separated with ,):");
+        String tags = s.nextLine();
+        Recipe recipe;
+        recipe = new Recipe();
+        
     }
 
     public static ArrayList<Recipe> getAllRecipes() throws ClassNotFoundException, SQLException, URISyntaxException { // run this once on program startup to get all recipes from database to local which will speed up the recipe searches

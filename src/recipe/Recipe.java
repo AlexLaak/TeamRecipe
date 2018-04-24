@@ -14,6 +14,16 @@ public class Recipe {
     private String tags;
     private String ingredients;
     private String instructions;
+
+    public Recipe() {
+    }
+
+    public Recipe(String name, String tags, String ingredients, String instructions) {
+        this.name = name;
+        this.tags = tags;
+        this.ingredients = ingredients;
+        this.instructions = instructions;
+    }
     
     public int getId() {
         return id;
