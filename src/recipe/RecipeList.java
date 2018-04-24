@@ -1,9 +1,11 @@
+package recipe;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package recipe;
+
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -94,6 +96,14 @@ public class RecipeList {
         
         System.out.println("INSERT INTO recipes (name,ingredients,instructions,tags) VALUES ('" + name + "'," + ingre + ",'" + instru + "'," + tags);
     }
+    
+    @Override
+    public String toString(){
+        for (Recipe recipe : recipes) {
+            System.out.println(recipe);
+        }
+        return "";
+    }
 
     public static ArrayList<Recipe> getAllRecipes() throws ClassNotFoundException, SQLException, URISyntaxException { // run this once on program startup to get all recipes from database to local which will speed up the recipe searches
         Connection connection = getConnection();
@@ -110,6 +120,7 @@ public class RecipeList {
             recipe.setInstructions(rst.getString("instructions"));
             recipeList.add(recipe);
         }
+        connection.close();
         return recipeList;
     }
 
