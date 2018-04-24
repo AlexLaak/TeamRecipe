@@ -116,6 +116,7 @@ public class RecipeList {
             recipe.setInstructions(rst.getString("instructions"));
             recipeList.add(recipe);
         }
+        connection.close();
         return recipeList;
     }
 

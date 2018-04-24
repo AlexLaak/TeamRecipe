@@ -18,10 +18,6 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
 
-        Connection connection = getConnection();
-
-        Statement stmt = connection.createStatement();
-
         Scanner sc = new Scanner(System.in);
         RecipeList recipelist = new RecipeList();
 
