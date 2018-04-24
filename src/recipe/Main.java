@@ -31,6 +31,12 @@ public class Main {
             if (command.equals("list")) {
                 System.out.println(recipelist);
             }
+            if(command.equals("add")) {
+                recipelist.addRecipe();
+            }
+            if(command.equals("exit")) {
+                break;
+            }
         }
 
         //stmt.executeUpdate("DROP TABLE IF EXISTS test");
