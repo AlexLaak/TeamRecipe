@@ -26,7 +26,56 @@ public class RecipeList {
         recipes = getAllRecipes();
     }
 
-    public static ArrayList<Recipe> getAllRecipes() throws ClassNotFoundException, SQLException, URISyntaxException {
+    public Recipe searchById(int id) {
+        for (Recipe recipe : recipes) {
+            if (recipe.getId() == id) {
+                return recipe;
+            }
+        }
+        return null;
+    }
+
+    public Recipe searchByName(String name) {
+        for (Recipe recipe : recipes) {
+            if (recipe.getName().equals(name)) {
+                return recipe;
+            }
+        }
+        return null;
+    }
+
+    public Recipe searchByTags(String tag) { //returns the recipe if it contains atleast 1 of the given tags
+        ArrayList<String> taglist = new ArrayList();
+        if (tag.charAt(0) == '(') {
+            String tags = tag.substring(1, tag.length() + 1);
+            String[] split = tags.split(",");
+            for (String string : split) {
+                taglist.add(string);
+            }
+        }
+        for (Recipe recipe : recipes) {
+            ArrayList<String> recipetaglist = new ArrayList();
+            if (recipe.getTags().charAt(0) == '(') {
+                String tags = recipe.getTags().substring(1, tag.length() + 1);
+                String[] split = tags.split(",");
+                for (String string : split) {
+                    recipetaglist.add(string);
+                }
+            }else{
+                if(taglist.contains(recipe.getTags())){
+                    return recipe;
+                }
+            }
+            for (String string : recipetaglist) {
+                if(taglist.contains(string)){
+                    return recipe;
+                }
+            }
+        }
+        return null;
+    }
+
+    public static ArrayList<Recipe> getAllRecipes() throws ClassNotFoundException, SQLException, URISyntaxException { // run this once on program startup to get all recipes from database to local which will speed up the recipe searches
         Connection connection = getConnection();
         Statement stm = connection.createStatement();
         String sql = "SELECT * from recipes;";

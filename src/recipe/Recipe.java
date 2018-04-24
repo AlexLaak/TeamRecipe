@@ -11,8 +11,10 @@ package recipe;
 public class Recipe {
     private int id;
     private String name;
+    private String tags;
     private String ingredients;
     private String instructions;
+    
     public int getId() {
         return id;
     }
@@ -24,6 +26,12 @@ public class Recipe {
     }
     public void setName(String name) {
         this.name = name;
+    }
+    public String getTags(){
+        return this.tags;
+    }
+    public void setTags(String tags){
+        this.tags = tags;
     }
     public String getIngredients() {
         return ingredients;
