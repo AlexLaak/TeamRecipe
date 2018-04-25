@@ -37,9 +37,19 @@ public class Main {
                 recipelist.addRecipe();
             }
             if(command.equals("searchtag")){
-                System.out.println("Give tags");
+                System.out.println("Give recipe tags");
                 String tags = sc.nextLine();
                 recipelist.searchByTags(tags);
+            }
+            if(command.equals("searchname")){
+                System.out.println("Give recipe name");
+                String name = sc.nextLine();
+                recipelist.searchByName(name);
+            }
+            if(command.equals("searchid")){
+                System.out.println("Give recipe id ");
+                int i = Integer.parseInt(sc.nextLine());
+                recipelist.searchById(i);
             }
             if(command.equals("exit")) {
                 break;

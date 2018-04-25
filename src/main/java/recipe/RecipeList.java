@@ -27,33 +27,36 @@ public class RecipeList {
         recipes = getAllRecipes();
     }
 
-    public Recipe searchById(int id) {
+    public void searchById(int id) {
         for (Recipe recipe : recipes) {
             if (recipe.getId() == id) {
-                return recipe;
+                System.out.println(recipe);
+                break;
             }
         }
-        return null;
     }
 
-    public Recipe searchByName(String name) {
+    public void searchByName(String name) { //prints all the recipes which name contains the given string
+        ArrayList<Recipe> list = new ArrayList<>();
         for (Recipe recipe : recipes) {
-            if (recipe.getName().equals(name)) {
-                return recipe;
+            if(recipe.getName().toLowerCase().contains(name.toLowerCase())){
+                list.add(recipe);
             }
         }
-        return null;
+        for (Recipe recipe : list) {
+            System.out.println(recipe);
+        }
     }
 
-    public void searchByTags(String tag) { //prints all the recipes that contain all of the given tags
+    public void searchByTags(String tag) { //prints all the recipes that contain all of the given tags(tags must be separated by ",")
         ArrayList<Recipe> list = new ArrayList<>();
         String[] tags = tag.split(",");
         for (Recipe recipe : recipes) {
             for (int i = 0; i < tags.length; i++) {
-                if (!recipe.getTags().contains(tags[i])) {
+                if (!recipe.getTags().toLowerCase().contains(tags[i].toLowerCase())) {
                     break;
                 }
-                if (i == tags.length - 1 && recipe.getTags().contains(tags[i])) {
+                if (i == tags.length - 1 && recipe.getTags().toLowerCase().contains(tags[i].toLowerCase())) {
                     list.add(recipe);
                 }
             }
