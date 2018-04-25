@@ -13,6 +13,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Scanner;
 
 /**
@@ -110,9 +112,50 @@ public class RecipeList {
         return "";
     }
     
-    public Recipe suggestRecipe() {                         //suggest
+    public void suggestRecipe() {                         //suggest
         
-        return recipes.get(0);
+        System.out.println("What ingridients you have?");
+        Scanner s = new Scanner(System.in);
+        String answer = s.nextLine();
+        String[] ing = answer.split(",");
+        Queue<Recipe> esa = searchHelper(answer);
+        
+        if (esa.isEmpty()) {
+            System.out.println("No suggestions based on ingridients!");
+            return;
+        }
+        
+        while (true) {
+            System.out.println(esa.poll());
+            System.out.println("Do you accept this suggestion? Y/N");
+            if (s.nextLine().equalsIgnoreCase("Y")) break;
+            if (esa.isEmpty()) {
+                System.out.println("No more suggestions");
+                break;
+            }
+        }
+
+    }
+    
+    public Queue<Recipe> searchHelper(String ingridients) {
+        Queue<Recipe> vastaus = new LinkedList<Recipe>();
+        String[] ing = ingridients.split(",");
+        int bestest = 0;
+        
+        for (Recipe recipe : recipes) {
+            int secondBestest = 0;
+            for (int i = 0; i < ing.length-1; i++) {
+                if (recipe.getIngredients().contains(ing[i])) {
+                    secondBestest++;
+                }
+            }
+            if (secondBestest >= bestest) {
+                bestest = secondBestest;
+                vastaus.add(recipe);
+            }
+            
+        }
+        return vastaus;
     }
 
     public static ArrayList<Recipe> getAllRecipes() throws ClassNotFoundException, SQLException, URISyntaxException { // run this once on program startup to get all recipes from database to local which will speed up the recipe searches
