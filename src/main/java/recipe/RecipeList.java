@@ -48,7 +48,7 @@ public class RecipeList {
         }
     }
     
-    public void searchByIngredients(String ingredients){ //prints all recipes which ingredients constains given ingredients
+    public ArrayList<Recipe> searchByIngredients(String ingredients){ //prints all recipes which ingredients constains given ingredients
         ArrayList<Recipe> list = new ArrayList<>();
         String[] ingre = ingredients.split(",");
         for (Recipe recipe : recipes) {
@@ -61,9 +61,7 @@ public class RecipeList {
                 }
             }
         }
-        for (Recipe recipe : list) {
-            System.out.println(recipe);
-        }
+        return list;
     }
 
     public void searchByTags(String tag) {          //prints all the recipes that contain all of the given tags(tags must be separated by ",")
