@@ -51,6 +51,11 @@ public class Main {
                 int i = Integer.parseInt(sc.nextLine());
                 recipelist.searchById(i);
             }
+            if(command.equals("searching")){
+                System.out.println("Give ingredients");
+                String ingredients= sc.nextLine();
+                recipelist.searchByIngredients(ingredients);
+            }
             if(command.equals("exit")) {
                 break;
             }
