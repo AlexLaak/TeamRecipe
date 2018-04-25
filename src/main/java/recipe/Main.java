@@ -54,7 +54,7 @@ public class Main {
             if(command.equals("searching")){
                 System.out.println("Give ingredients");
                 String ingredients= sc.nextLine();
-                recipelist.searchByIngredients(ingredients);
+                System.out.println(recipelist.searchByIngredients(ingredients));
             }
             if(command.equals("exit")) {
                 break;
