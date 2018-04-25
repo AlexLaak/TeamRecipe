@@ -47,6 +47,24 @@ public class RecipeList {
             System.out.println(recipe);
         }
     }
+    
+    public void searchByIngredients(String ingredients){ //prints all recipes which ingredients constains given ingredients
+        ArrayList<Recipe> list = new ArrayList<>();
+        String[] ingre = ingredients.split(",");
+        for (Recipe recipe : recipes) {
+            for(int i = 0; i < ingre.length; i++){
+                if(!recipe.getIngredients().toLowerCase().contains(ingre[i].toLowerCase())){
+                    break;
+                }
+                if(i == ingre.length - 1 && recipe.getIngredients().toLowerCase().contains(ingre[i].toLowerCase())){
+                    list.add(recipe);
+                }
+            }
+        }
+        for (Recipe recipe : list) {
+            System.out.println(recipe);
+        }
+    }
 
     public void searchByTags(String tag) { //prints all the recipes that contain all of the given tags(tags must be separated by ",")
         ArrayList<Recipe> list = new ArrayList<>();
