@@ -114,22 +114,22 @@ public class RecipeList {
     
     public void suggestRecipe() {                         //suggest
         
-        System.out.println("What ingridients you have?");
+        System.out.println("What ingredients you have?");
         Scanner s = new Scanner(System.in);
         String answer = s.nextLine();
         String[] ing = answer.split(",");
-        Queue<Recipe> esa = searchHelper(answer);
+        Queue<Recipe> que = searchHelper(answer);
         
-        if (esa.isEmpty()) {
-            System.out.println("No suggestions based on ingridients!");
+        if (que.isEmpty()) {
+            System.out.println("No suggestions based on ingredients!");
             return;
         }
         
         while (true) {
-            System.out.println(esa.poll());
+            System.out.println(que.poll());
             System.out.println("Do you accept this suggestion? Y/N");
             if (s.nextLine().equalsIgnoreCase("Y")) break;
-            if (esa.isEmpty()) {
+            if (que.isEmpty()) {
                 System.out.println("No more suggestions");
                 break;
             }
@@ -138,7 +138,7 @@ public class RecipeList {
     }
     
     public Queue<Recipe> searchHelper(String ingridients) {
-        Queue<Recipe> vastaus = new LinkedList<Recipe>();
+        Queue<Recipe> resultQue = new LinkedList<Recipe>();
         String[] ing = ingridients.split(",");
         int bestest = 0;
         
@@ -151,11 +151,11 @@ public class RecipeList {
             }
             if (secondBestest >= bestest) {
                 bestest = secondBestest;
-                vastaus.add(recipe);
+                resultQue.add(recipe);
             }
             
         }
-        return vastaus;
+        return resultQue;
     }
 
     public static ArrayList<Recipe> getAllRecipes() throws ClassNotFoundException, SQLException, URISyntaxException { // run this once on program startup to get all recipes from database to local which will speed up the recipe searches
