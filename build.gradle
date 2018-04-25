@@ -23,6 +23,11 @@ mainClassName = 'main.java.recipe.Main'
 run {
 	standardInput = System.in
 }
+
+task stage {
+    dependsOn clean, jar 
+}
+jar.mustRunAfter clean		
 /*
 jar {
   manifest {
