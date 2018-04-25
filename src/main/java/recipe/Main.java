@@ -36,6 +36,11 @@ public class Main {
             if(command.equals("add")) {
                 recipelist.addRecipe();
             }
+            if(command.equals("searchtag")){
+                System.out.println("Give tags");
+                String tags = sc.nextLine();
+                recipelist.searchByTags(tags);
+            }
             if(command.equals("exit")) {
                 break;
             }

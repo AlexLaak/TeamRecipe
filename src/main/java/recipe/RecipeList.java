@@ -1,14 +1,10 @@
 package main.java.recipe;
 
-
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
-
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.sql.Connection;
@@ -49,38 +45,25 @@ public class RecipeList {
         return null;
     }
 
-    public Recipe searchByTags(String tag) { //returns the recipe if it contains atleast 1 of the given tags
-        ArrayList<String> taglist = new ArrayList();
-        if (tag.charAt(0) == '(') {
-            String tags = tag.substring(1, tag.length() + 1);
-            String[] split = tags.split(",");
-            for (String string : split) {
-                taglist.add(string);
-            }
-        }
+    public void searchByTags(String tag) { //prints all the recipes that contain all of the given tags
+        ArrayList<Recipe> list = new ArrayList<>();
+        String[] tags = tag.split(",");
         for (Recipe recipe : recipes) {
-            ArrayList<String> recipetaglist = new ArrayList();
-            if (recipe.getTags().charAt(0) == '(') {
-                String tags = recipe.getTags().substring(1, tag.length() + 1);
-                String[] split = tags.split(",");
-                for (String string : split) {
-                    recipetaglist.add(string);
+            for (int i = 0; i < tags.length; i++) {
+                if (!recipe.getTags().contains(tags[i])) {
+                    break;
                 }
-            }else{
-                if(taglist.contains(recipe.getTags())){
-                    return recipe;
-                }
-            }
-            for (String string : recipetaglist) {
-                if(taglist.contains(string)){
-                    return recipe;
+                if (i == tags.length - 1 && recipe.getTags().contains(tags[i])) {
+                    list.add(recipe);
                 }
             }
         }
-        return null;
+        for (Recipe recipe : list) {
+            System.out.println(recipe);
+        }
     }
-    
-    public void addRecipe() throws ClassNotFoundException, SQLException, URISyntaxException{
+
+    public void addRecipe() throws ClassNotFoundException, SQLException, URISyntaxException {
         Connection connection = getConnection();
         Statement stm = connection.createStatement();
         Scanner s = new Scanner(System.in);
@@ -95,13 +78,13 @@ public class RecipeList {
         /*Recipe recipe;
         recipe = new Recipe(name, tags, ingre, instru);
         recipes.add(recipe);*/
-        
+
         stm.executeUpdate("INSERT INTO recipes (name,ingredients,instructions,tags) VALUES ('" + name + "','" + ingre + "','" + instru + "','" + tags + "')");
         recipes = getAllRecipes();
     }
-    
+
     @Override
-    public String toString(){
+    public String toString() {
         for (Recipe recipe : recipes) {
             System.out.println(recipe);
         }
