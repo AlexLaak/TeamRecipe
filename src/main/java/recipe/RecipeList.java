@@ -36,7 +36,7 @@ public class RecipeList {
         }
     }
 
-    public void searchByName(String name) { //prints all the recipes which name contains the given string
+    public void searchByName(String name) {             //prints all the recipes which name contains the given string
         ArrayList<Recipe> list = new ArrayList<>();
         for (Recipe recipe : recipes) {
             if(recipe.getName().toLowerCase().contains(name.toLowerCase())){
@@ -48,7 +48,7 @@ public class RecipeList {
         }
     }
 
-    public void searchByTags(String tag) { //prints all the recipes that contain all of the given tags(tags must be separated by ",")
+    public void searchByTags(String tag) {          //prints all the recipes that contain all of the given tags(tags must be separated by ",")
         ArrayList<Recipe> list = new ArrayList<>();
         String[] tags = tag.split(",");
         for (Recipe recipe : recipes) {
@@ -92,6 +92,11 @@ public class RecipeList {
             System.out.println(recipe);
         }
         return "";
+    }
+    
+    public Recipe suggestRecipe() {                         //suggest
+        
+        return recipes.get(0);
     }
 
     public static ArrayList<Recipe> getAllRecipes() throws ClassNotFoundException, SQLException, URISyntaxException { // run this once on program startup to get all recipes from database to local which will speed up the recipe searches
