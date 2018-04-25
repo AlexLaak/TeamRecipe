@@ -54,7 +54,9 @@ public class Main {
             if(command.equals("searching")){
                 System.out.println("Give ingredients");
                 String ingredients= sc.nextLine();
-                System.out.println(recipelist.searchByIngredients(ingredients));
+                for (Recipe recipe : recipelist.searchByIngredients(ingredients)) {
+                    System.out.println(recipe);
+                }
             }
             if(command.equals("suggest")){
                 recipelist.suggestRecipe();
