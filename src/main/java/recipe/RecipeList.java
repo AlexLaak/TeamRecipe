@@ -13,6 +13,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Scanner;
 
 /**
@@ -36,7 +38,7 @@ public class RecipeList {
         return null;
     }
 
-    public void searchByName(String name) { //prints all the recipes which name contains the given string
+    public void searchByName(String name) {             //prints all the recipes which name contains the given string
         ArrayList<Recipe> list = new ArrayList<>();
         for (Recipe recipe : recipes) {
             if(recipe.getName().toLowerCase().contains(name.toLowerCase())){
@@ -47,8 +49,24 @@ public class RecipeList {
             System.out.println(recipe);
         }
     }
+    
+    public ArrayList<Recipe> searchByIngredients(String ingredients){ //prints all recipes which ingredients constains given ingredients
+        ArrayList<Recipe> list = new ArrayList<>();
+        String[] ingre = ingredients.split(",");
+        for (Recipe recipe : recipes) {
+            for(int i = 0; i < ingre.length; i++){
+                if(!recipe.getIngredients().toLowerCase().contains(ingre[i].toLowerCase())){
+                    break;
+                }
+                if(i == ingre.length - 1 && recipe.getIngredients().toLowerCase().contains(ingre[i].toLowerCase())){
+                    list.add(recipe);
+                }
+            }
+        }
+        return list;
+    }
 
-    public void searchByTags(String tag) { //prints all the recipes that contain all of the given tags(tags must be separated by ",")
+    public void searchByTags(String tag) {          //prints all the recipes that contain all of the given tags(tags must be separated by ",")
         ArrayList<Recipe> list = new ArrayList<>();
         String[] tags = tag.split(",");
         for (Recipe recipe : recipes) {
@@ -115,6 +133,52 @@ public class RecipeList {
             System.out.println(recipe);
         }
         return "";
+    }
+    
+    public void suggestRecipe() {                         //suggest
+        
+        System.out.println("What ingredients you have?");
+        Scanner s = new Scanner(System.in);
+        String answer = s.nextLine();
+        String[] ing = answer.split(",");
+        Queue<Recipe> que = searchHelper(answer);
+        
+        if (que.isEmpty()) {
+            System.out.println("No suggestions based on ingredients!");
+            return;
+        }
+        
+        while (true) {
+            System.out.println(que.poll());
+            System.out.println("Do you accept this suggestion? Y/N");
+            if (s.nextLine().equalsIgnoreCase("Y")) break;
+            if (que.isEmpty()) {
+                System.out.println("No more suggestions");
+                break;
+            }
+        }
+
+    }
+    
+    public Queue<Recipe> searchHelper(String ingridients) {
+        Queue<Recipe> resultQue = new LinkedList<Recipe>();
+        String[] ing = ingridients.split(",");
+        int bestest = 0;
+        
+        for (Recipe recipe : recipes) {
+            int secondBestest = 0;
+            for (int i = 0; i < ing.length-1; i++) {
+                if (recipe.getIngredients().contains(ing[i])) {
+                    secondBestest++;
+                }
+            }
+            if (secondBestest >= bestest) {
+                bestest = secondBestest;
+                resultQue.add(recipe);
+            }
+            
+        }
+        return resultQue;
     }
 
     public static ArrayList<Recipe> getAllRecipes() throws ClassNotFoundException, SQLException, URISyntaxException { // run this once on program startup to get all recipes from database to local which will speed up the recipe searches
