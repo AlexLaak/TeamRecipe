@@ -27,13 +27,13 @@ public class RecipeList {
         recipes = getAllRecipes();
     }
 
-    public void searchById(int id) {
+    public Recipe searchById(int id) {
         for (Recipe recipe : recipes) {
             if (recipe.getId() == id) {
-                System.out.println(recipe);
-                break;
+                return recipe;
             }
         }
+        return null;
     }
 
     public void searchByName(String name) { //prints all the recipes which name contains the given string
@@ -84,6 +84,29 @@ public class RecipeList {
 
         stm.executeUpdate("INSERT INTO recipes (name,ingredients,instructions,tags) VALUES ('" + name + "','" + ingre + "','" + instru + "','" + tags + "')");
         recipes = getAllRecipes();
+    }
+    
+    public void deleteRecipe() throws ClassNotFoundException, SQLException, URISyntaxException {
+        Connection connection = getConnection();
+        Statement stm = connection.createStatement();
+        Scanner s = new Scanner(System.in);
+        System.out.println("ID that you want to delete:");
+        int id = s.nextInt();
+        Recipe recipe = searchById(id);
+        if (recipe != null){
+            System.out.println("DELETE FROM recipes WHERE id = '" + recipe.getId() + "'");
+            stm.executeUpdate("DELETE FROM recipes WHERE id = '" + recipe.getId() + "'");
+            //stm.executeQuery("SELECT SETVAL((SELECT pg_get_serial_sequence('recipes', 'id')), 13, false);");
+            int max = 0;
+            ResultSet rs = stm.executeQuery("SELECT id FROM recipes ORDER BY id DESC LIMIT 1");
+            while (rs.next()) {
+                max = rs.getInt(1);
+            }
+            stm.executeQuery("SELECT SETVAL((SELECT pg_get_serial_sequence('recipes', 'id')), " + max + ", true);");
+            recipes = getAllRecipes();
+        } else {
+            System.out.println("There is not a recipe with that ID!");
+        }
     }
 
     @Override

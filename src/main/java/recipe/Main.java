@@ -36,6 +36,9 @@ public class Main {
             if(command.equals("add")) {
                 recipelist.addRecipe();
             }
+            if (command.equals("delete")) {
+                recipelist.deleteRecipe();
+            }
             if(command.equals("searchtag")){
                 System.out.println("Give recipe tags");
                 String tags = sc.nextLine();
