@@ -52,7 +52,7 @@ public class Main {
             if(command.equals("searchid")){
                 System.out.println("Give recipe id ");
                 int i = Integer.parseInt(sc.nextLine());
-                recipelist.searchById(i);
+                System.out.println(recipelist.searchById(i));
             }
             if(command.equals("searching")){
                 System.out.println("Give ingredients");

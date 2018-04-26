@@ -149,7 +149,10 @@ public class RecipeList {
         }
         
         while (true) {
-            System.out.println(que.poll());
+            Recipe recipe = que.poll();
+            System.out.println(recipe);
+            System.out.println("You are missing the following ingredients: " + missingIngredients(answer, recipe));
+            //System.out.println(que.poll());
             System.out.println("Do you accept this suggestion? Y/N");
             if (s.nextLine().equalsIgnoreCase("Y")) break;
             if (que.isEmpty()) {
@@ -157,7 +160,19 @@ public class RecipeList {
                 break;
             }
         }
-
+    }
+    
+    public ArrayList<String> missingIngredients(String ingredients, Recipe recipe){
+        ArrayList<String> missing = new ArrayList<>();
+        String[] ing = ingredients.split(",");
+        String[] recipeing;
+        if(recipe.getIngredients().charAt(0) == '('){
+            recipeing = recipe.getIngredients().substring(1, recipe.getIngredients().length() - 1).split(",");
+        }else{
+            recipeing = recipe.getIngredients().split(",");
+        }
+        
+        return missing;
     }
     
     public Queue<Recipe> searchHelper(String ingridients) {
@@ -167,12 +182,12 @@ public class RecipeList {
         
         for (Recipe recipe : recipes) {
             int secondBestest = 0;
-            for (int i = 0; i < ing.length-1; i++) {
+            for (int i = 0; i < ing.length; i++) {
                 if (recipe.getIngredients().contains(ing[i])) {
                     secondBestest++;
                 }
             }
-            if (secondBestest >= bestest) {
+            if (secondBestest >= bestest) {           
                 bestest = secondBestest;
                 resultQue.add(recipe);
             }
