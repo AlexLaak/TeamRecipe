@@ -28,7 +28,7 @@ public class Main {
         String command;
         System.out.println("Welcome to recipe application");
         while (true) {
-            System.out.println("Give command");
+            System.out.println("\nGive command:");
             command = sc.nextLine();
             if (command.equals("list")) {
                 System.out.println(recipelist);
@@ -63,6 +63,10 @@ public class Main {
             }
             if(command.equals("suggest")){
                 recipelist.suggestRecipe();
+            }
+            if(command.equals("help") || command.equals("commands")) {
+                System.out.println("Available commands: list, add, delete, searchtag, "
+                        + "searchname, searchid, searching, suggest, exit");
             }
             if(command.equals("exit")) {
                 break;
