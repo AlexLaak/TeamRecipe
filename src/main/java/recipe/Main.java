@@ -67,8 +67,8 @@ public class Main {
         }
 
         //stmt.executeUpdate("DROP TABLE IF EXISTS test");
-        //stmt.executeUpdate("CREATE TABLE users (username varchar(255), password varchar(255), allergies varchar(1000))");
-        //stmt.executeUpdate("CREATE TABLE recipes (name varchar(255), ingredients varchar(1000), instructions varchar(10000), tags varchar(1000))");
+        //stmt.executeUpdate("CREATE TABLE users (ID SERIAL,username varchar(255), password varchar(255), allergies varchar(1000))");
+        //stmt.executeUpdate("CREATE TABLE recipes (ID SERIAL, name varchar(255), ingredients varchar(1000), instructions varchar(10000), tags varchar(1000))");
         //stmt.executeUpdate("CREATE TABLE test (name varchar(255),pena varchar(255))");
         //stmt.executeUpdate("INSERT INTO test VALUES ('testing',('again','asd'))");
         //stmt.executeUpdate("INSERT INTO users VALUES ('pena', 'pena', ('peanut','fish'))");    

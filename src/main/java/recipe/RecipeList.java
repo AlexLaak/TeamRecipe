@@ -99,7 +99,7 @@ public class RecipeList {
         /*Recipe recipe;
         recipe = new Recipe(name, tags, ingre, instru);
         recipes.add(recipe);*/
-
+        
         stm.executeUpdate("INSERT INTO recipes (name,ingredients,instructions,tags) VALUES ('" + name + "','" + ingre + "','" + instru + "','" + tags + "')");
         recipes = getAllRecipes();
     }
@@ -161,6 +161,7 @@ public class RecipeList {
     public static ArrayList<Recipe> getAllRecipes() throws ClassNotFoundException, SQLException, URISyntaxException { // run this once on program startup to get all recipes from database to local which will speed up the recipe searches
         Connection connection = getConnection();
         Statement stm = connection.createStatement();
+        String rstt;
         String sql = "SELECT * from recipes;";
         ResultSet rst = stm.executeQuery(sql);
         ArrayList<Recipe> recipeList = new ArrayList<>();
@@ -169,7 +170,9 @@ public class RecipeList {
             recipe = new Recipe();
             recipe.setId(rst.getInt("id"));
             recipe.setName(rst.getString("name"));
-            recipe.setIngredients(rst.getString("ingredients"));
+            rstt = rst.getString("ingredients");
+            if (rstt.endsWith(")")) recipe.setIngredients(rstt.substring(1,rstt.length()-1));
+                else recipe.setIngredients(rst.getString("ingredients"));
             recipe.setInstructions(rst.getString("instructions"));
             recipe.setTags(rst.getString("tags"));
             recipeList.add(recipe);
