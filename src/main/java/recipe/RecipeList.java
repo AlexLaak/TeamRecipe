@@ -164,12 +164,20 @@ public class RecipeList {
     
     public ArrayList<String> missingIngredients(String ingredients, Recipe recipe){
         ArrayList<String> missing = new ArrayList<>();
-        String[] ing = ingredients.split(",");
-        String[] recipeing;
-        if(recipe.getIngredients().charAt(0) == '('){
-            recipeing = recipe.getIngredients().substring(1, recipe.getIngredients().length() - 1).split(",");
-        }else{
-            recipeing = recipe.getIngredients().split(",");
+        String[] recipeing = recipe.getIngredients().split(",");
+        String[] ingre = ingredients.split(",");
+        boolean found = false;
+        for (String ing : recipeing) {
+            for (String ingr : ingre) {
+                if(ing.contains(ingr)){
+                    found = true;
+                }
+            }
+            if(found){
+                found = false;
+            }else{
+                missing.add(ing);
+            }
         }
         
         return missing;
