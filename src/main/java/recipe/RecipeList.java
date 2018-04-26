@@ -151,7 +151,12 @@ public class RecipeList {
         while (true) {
             Recipe recipe = que.poll();
             System.out.println(recipe);
-            System.out.println("You are missing the following ingredients: " + missingIngredients(answer, recipe));
+            ArrayList<String> miss = missingIngredients(answer, recipe);
+            if(miss.isEmpty()){
+                System.out.println("You have all the ingredients.");
+            }else{
+                System.out.println("You are missing the following ingredients: " + miss);
+            }
             //System.out.println(que.poll());
             System.out.println("Do you accept this suggestion? Y/N");
             if (s.nextLine().equalsIgnoreCase("Y")) break;
