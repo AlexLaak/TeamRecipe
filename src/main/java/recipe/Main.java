@@ -24,10 +24,39 @@ public class Main {
 
         Scanner sc = new Scanner(System.in);
         RecipeList recipelist = new RecipeList();
+        Boolean login = false;
 
         String command;
         System.out.println("Welcome to recipe application");
+        
         while (true) {
+            System.out.println("Do you have an account? (Y/N)");
+            command = sc.nextLine();
+
+            if (command.equals("Y")) {
+                System.out.println("Login:");
+                login = User.login();
+                for (int i = 0; i < 2; i++) { //3 attempts for login
+                    if (login) {
+                        System.out.println("Login successful!");
+                        break;
+                    }
+                    System.out.println("Wrong username or password!");
+                    login = User.login();
+                }
+                if (login) break;
+            }
+
+            if (command.equals("N")) {
+                System.out.println("Please register a new account!");
+                int status = User.register();
+                if (status == 1) {
+                    System.out.println("Register successfully!");
+                }
+            }
+        }
+        
+        while (login) {
             System.out.println("\nGive command:");
             command = sc.nextLine();
             if (command.equals("list")) {
