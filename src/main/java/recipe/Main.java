@@ -92,7 +92,7 @@ public class Main {
                 }
             }
             if(command.equalsIgnoreCase("suggest")){
-                recipelist.suggestRecipe();
+                recipelist.suggestRecipe(user);
             }
             if(command.equalsIgnoreCase("help") || command.equalsIgnoreCase("commands")) {
                 System.out.println("Available commands: list, add, delete, searchtag, "
