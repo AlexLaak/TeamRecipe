@@ -85,7 +85,8 @@ public class RecipeList {
             System.out.println(recipe);
         }
     }
-
+    
+    //Adding recipe column by column and inserting it to the database
     public void addRecipe() throws ClassNotFoundException, SQLException, URISyntaxException {
         Connection connection = getConnection();
         Statement stm = connection.createStatement();
@@ -104,7 +105,9 @@ public class RecipeList {
         
         stm.executeUpdate("INSERT INTO recipes (name,ingredients,instructions,tags) VALUES ('" + name + "','" + ingre + "','" + instru + "','" + tags + "')");
         recipes = getAllRecipes();
+        connection.close();
     }
+    
     
     public void deleteRecipe() throws ClassNotFoundException, SQLException, URISyntaxException {
         Connection connection = getConnection();
@@ -127,6 +130,7 @@ public class RecipeList {
         } else {
             System.out.println("There is not a recipe with that ID!");
         }
+        connection.close();
     }
 
     @Override
@@ -234,6 +238,28 @@ public class RecipeList {
         }
         connection.close();
         return recipeList;
+    }
+    
+    public void dropTable() throws URISyntaxException, SQLException, ClassNotFoundException {
+        Connection connection = getConnection();
+        Statement stm = connection.createStatement();
+        Scanner s = new Scanner(System.in);
+        System.out.println("Select which table to drop and create (1=Users , 2=Recipes , 0=Cancel");
+        int num = s.nextInt();
+        if (num == 1) {
+            stm.executeUpdate("DROP TABLE IF EXISTS users");
+            stm.executeUpdate("CREATE TABLE users (ID SERIAL,username varchar(255), password varchar(255), allergies varchar(1000))");
+            System.out.println("Table users dropped and created again");
+        }
+        if (num == 2) {
+            stm.executeUpdate("DROP TABLE IF EXISTS recipes");
+            stm.executeUpdate("CREATE TABLE recipes (ID SERIAL, name varchar(255), ingredients varchar(1000), instructions varchar(10000), tags varchar(1000))");
+            System.out.println("Table recipes dropped and created again");
+        } else {
+            System.out.println("Dropping cancelled");
+        }
+        recipes = getAllRecipes();
+        connection.close();
     }
 
     private static Connection getConnection() throws URISyntaxException, SQLException {

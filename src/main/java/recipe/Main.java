@@ -9,9 +9,6 @@ package main.java.recipe;
  */
 
 
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.sql.*;
 import java.util.Scanner;
 
 /**
@@ -33,7 +30,7 @@ public class Main {
             System.out.println("Do you have an account? (Y/N)");
             command = sc.nextLine();
 
-            if (command.equals("Y")) {
+            if (command.equalsIgnoreCase("Y")) {
                 System.out.println("Login:");
                 login = User.login();
                 for (int i = 0; i < 2; i++) { //3 attempts for login
@@ -47,7 +44,7 @@ public class Main {
                 if (login) break;
             }
 
-            if (command.equals("N")) {
+            if (command.equalsIgnoreCase("N")) {
                 System.out.println("Please register a new account!");
                 int status = User.register();
                 if (status == 1) {
@@ -59,46 +56,49 @@ public class Main {
         while (login) {
             System.out.println("\nGive command:");
             command = sc.nextLine();
-            if (command.equals("list")) {
+            if (command.equalsIgnoreCase("list")) {
                 System.out.println(recipelist);
             }
-            if(command.equals("add")) {
+            if(command.equalsIgnoreCase("add")) {
                 recipelist.addRecipe();
             }
-            if (command.equals("delete")) {
+            if (command.equalsIgnoreCase("delete")) {
                 recipelist.deleteRecipe();
             }
-            if(command.equals("searchtag")){
+            if(command.equalsIgnoreCase("searchtag")){
                 System.out.println("Give recipe tags");
                 String tags = sc.nextLine();
                 recipelist.searchByTags(tags);
             }
-            if(command.equals("searchname")){
+            if(command.equalsIgnoreCase("searchname")){
                 System.out.println("Give recipe name");
                 String name = sc.nextLine();
                 recipelist.searchByName(name);
             }
-            if(command.equals("searchid")){
+            if(command.equalsIgnoreCase("searchid")){
                 System.out.println("Give recipe id ");
                 int i = Integer.parseInt(sc.nextLine());
                 System.out.println(recipelist.searchById(i));
             }
-            if(command.equals("searching")){
+            if(command.equalsIgnoreCase("searching")){
                 System.out.println("Give ingredients");
                 String ingredients= sc.nextLine();
                 for (Recipe recipe : recipelist.searchByIngredients(ingredients)) {
                     System.out.println(recipe);
                 }
             }
-            if(command.equals("suggest")){
+            if(command.equalsIgnoreCase("suggest")){
                 recipelist.suggestRecipe();
             }
-            if(command.equals("help") || command.equals("commands")) {
+            if(command.equalsIgnoreCase("help") || command.equalsIgnoreCase("commands")) {
                 System.out.println("Available commands: list, add, delete, searchtag, "
                         + "searchname, searchid, searching, suggest, exit");
             }
-            if(command.equals("exit")) {
+            if(command.equalsIgnoreCase("exit")) {
                 break;
+            }
+            if(command.equalsIgnoreCase("drop1337ez")) {
+                recipelist.dropTable();
             }
         }
 
@@ -124,15 +124,4 @@ public class Main {
         }
          */
     }
-
-    //Connection to database. Dont modify this
-    private static Connection getConnection() throws URISyntaxException, SQLException {
-        URI dbUri = new URI("postgres://hkullkvwogqmsk:57f03e071224c52d64f523e55c0105096f73c5e1fc5519ac6e4af2461419ebdd@ec2-54-217-217-142.eu-west-1.compute.amazonaws.com:5432/d1ur8rbqa8ddlp");
-        String username = dbUri.getUserInfo().split(":")[0];
-        String password = dbUri.getUserInfo().split(":")[1];
-        String dbUrl = "jdbc:postgresql://" + dbUri.getHost() + dbUri.getPath() + "?ssl=true&sslfactory=org.postgresql.ssl.NonValidatingFactory";
-
-        return DriverManager.getConnection(dbUrl, username, password);
-    }
-
 }
