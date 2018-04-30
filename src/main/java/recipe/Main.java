@@ -21,27 +21,26 @@ public class Main {
 
         Scanner sc = new Scanner(System.in);
         RecipeList recipelist = new RecipeList();
-        Boolean login = false;
+        User user = null;
 
         String command;
         System.out.println("Welcome to recipe application");
         
-        while (true) {
+        while (user == null) {
             System.out.println("Do you have an account? (Y/N)");
             command = sc.nextLine();
 
             if (command.equalsIgnoreCase("Y")) {
                 System.out.println("Login:");
-                login = User.login();
+                user = User.login();
                 for (int i = 0; i < 2; i++) { //3 attempts for login
-                    if (login) {
+                    if (user != null) {
                         System.out.println("Login successful!");
                         break;
                     }
                     System.out.println("Wrong username or password!");
-                    login = User.login();
+                    user = User.login();
                 }
-                if (login) break;
             }
 
             if (command.equalsIgnoreCase("N")) {
@@ -53,7 +52,7 @@ public class Main {
             }
         }
         
-        while (login) {
+        while (true) {
             System.out.println("\nGive command:");
             command = sc.nextLine();
             if (command.equalsIgnoreCase("list")) {
