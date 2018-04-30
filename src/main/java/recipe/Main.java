@@ -77,7 +77,12 @@ public class Main {
             if(command.equalsIgnoreCase("searchid")){
                 System.out.println("Give recipe id ");
                 int i = Integer.parseInt(sc.nextLine());
-                System.out.println(recipelist.searchById(i));
+                Recipe recipe = recipelist.searchById(i);
+                if (recipe == null) {
+                    System.out.println("There is no recipe with that ID");
+                } else {
+                    System.out.println(recipe);
+                }
             }
             if(command.equalsIgnoreCase("searching")){
                 System.out.println("Give ingredients");
