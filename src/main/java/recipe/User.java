@@ -113,7 +113,7 @@ public class User {
         return status;
     }
     
-    public static boolean login() {
+    public static User login() {
         boolean status = false;
         try{
             Connection connection = getConnection();
@@ -126,10 +126,17 @@ public class User {
             ResultSet rs = stm.executeQuery("SELECT * FROM users WHERE username = '" + username + "' and password = '" + password + "'");
             status = rs.next();
             connection.close();
+            if(!status){
+                return null;
+            }
+            rs.next();
+            String allergy = rs.getString("allergies");
+            User newuser = new User(username,password,allergy);
+            return newuser;
         }catch(URISyntaxException | SQLException e){
             System.out.println(e);
         }
-        return status;
+        return null;
     }
     
     private static Connection getConnection() throws URISyntaxException, SQLException {
