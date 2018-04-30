@@ -141,13 +141,12 @@ public class RecipeList {
         return "";
     }
     
-    public void suggestRecipe() {                         //suggest
+    public void suggestRecipe(User user) {                         //suggest
         
         System.out.println("What ingredients you have?");
         Scanner s = new Scanner(System.in);
         String answer = s.nextLine();
-        String[] ing = answer.split(",");
-        Queue<Recipe> que = searchHelper(answer);
+        Queue<Recipe> que = searchHelper(answer,user);
         
         if (que.isEmpty()) {
             System.out.println("No suggestions based on ingredients!");
@@ -194,12 +193,23 @@ public class RecipeList {
         return missing;
     }
     
-    public Queue<Recipe> searchHelper(String ingridients) {
+    public Queue<Recipe> searchHelper(String ingridients, User user) {
         Queue<Recipe> resultQue = new LinkedList<Recipe>();
         String[] ing = ingridients.split(",");
+        String[] alrg = user.getAllergies().split(",");
         int bestest = 0;
         
+        boolean badRecipe = false;
+        
         for (Recipe recipe : recipes) {
+            badRecipe = false;
+            for (String string : alrg) {
+                if (recipe.getIngredients().contains(string)) {
+                    badRecipe = true;
+                    break;
+                }
+            }
+            if (!badRecipe) {
             int secondBestest = 0;
             for (int i = 0; i < ing.length; i++) {
                 if (recipe.getIngredients().contains(ing[i])) {
@@ -212,7 +222,7 @@ public class RecipeList {
                 resultQue.add(recipe);
                 Collections.reverse((List<?>) resultQue);
             }
-            
+            }
         }
         return resultQue;
     }
