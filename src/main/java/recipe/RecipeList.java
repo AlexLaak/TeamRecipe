@@ -164,7 +164,14 @@ public class RecipeList {
             }
             //System.out.println(que.poll());
             System.out.println("Do you accept this suggestion? Y/N");
-            if (s.nextLine().equalsIgnoreCase("Y")) break;
+            if (s.nextLine().equalsIgnoreCase("Y")) {
+                System.out.println("");
+                System.out.println("Recipe name: " + recipe.getName());
+                System.out.println("Recipe ingridients: " + recipe.getIngredients());
+                System.out.println("Recipe instructions: " + recipe.getInstructions());
+                System.out.println("Recipe tags: " + recipe.getTags());
+                break;
+            }
             if (que.isEmpty()) {
                 System.out.println("No more suggestions");
                 break;
