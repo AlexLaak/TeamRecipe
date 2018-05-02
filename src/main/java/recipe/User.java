@@ -129,7 +129,6 @@ public class User {
             if(!status){
                 return null;
             }
-            rs.next();
             String allergy = rs.getString("allergies");
             User newuser = new User(username,password,allergy);
             return newuser;

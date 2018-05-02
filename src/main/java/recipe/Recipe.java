@@ -12,12 +12,13 @@ package main.java.recipe;
  *
  * @author TeamRecipe
  */
-public class Recipe {
+public class Recipe implements Comparable<Recipe>{
     private int id;
     private String name;
     private String tags;
     private String ingredients;
     private String instructions;
+    private int scoreGiven;
 
     public Recipe() {
     }
@@ -27,6 +28,15 @@ public class Recipe {
         this.tags = tags;
         this.ingredients = ingredients;
         this.instructions = instructions;
+        this.scoreGiven = 0;
+    }
+
+    public int getScoreGiven() {
+        return scoreGiven;
+    }
+
+    public void setScoreGiven(int scoreGiven) {
+        this.scoreGiven = scoreGiven;
     }
     
     public int getId() {
@@ -63,5 +73,10 @@ public class Recipe {
     @Override
     public String toString(){
         return this.id + " " + this.name + " " + this.tags + " " + this.ingredients + " " + this.instructions;
+    }
+
+    @Override
+    public int compareTo(Recipe o) {
+        return o.scoreGiven - this.scoreGiven;
     }
 }

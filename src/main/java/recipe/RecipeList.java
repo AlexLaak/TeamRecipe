@@ -18,6 +18,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 import java.util.Scanner;
+import java.util.TreeSet;
 
 /**
  *
@@ -43,7 +44,7 @@ public class RecipeList {
     public void searchByName(String name) {             //prints all the recipes which name contains the given string
         ArrayList<Recipe> list = new ArrayList<>();
         for (Recipe recipe : recipes) {
-            if(recipe.getName().toLowerCase().contains(name.toLowerCase())){
+            if (recipe.getName().toLowerCase().contains(name.toLowerCase())) {
                 list.add(recipe);
             }
         }
@@ -51,16 +52,16 @@ public class RecipeList {
             System.out.println(recipe);
         }
     }
-    
-    public ArrayList<Recipe> searchByIngredients(String ingredients){ //prints all recipes which ingredients constains given ingredients
+
+    public ArrayList<Recipe> searchByIngredients(String ingredients) { //prints all recipes which ingredients constains given ingredients
         ArrayList<Recipe> list = new ArrayList<>();
         String[] ingre = ingredients.split(",");
         for (Recipe recipe : recipes) {
-            for(int i = 0; i < ingre.length; i++){
-                if(!recipe.getIngredients().toLowerCase().contains(ingre[i].toLowerCase())){
+            for (int i = 0; i < ingre.length; i++) {
+                if (!recipe.getIngredients().toLowerCase().contains(ingre[i].toLowerCase())) {
                     break;
                 }
-                if(i == ingre.length - 1 && recipe.getIngredients().toLowerCase().contains(ingre[i].toLowerCase())){
+                if (i == ingre.length - 1 && recipe.getIngredients().toLowerCase().contains(ingre[i].toLowerCase())) {
                     list.add(recipe);
                 }
             }
@@ -85,7 +86,7 @@ public class RecipeList {
             System.out.println(recipe);
         }
     }
-    
+
     //Adding recipe column by column and inserting it to the database
     public void addRecipe() throws ClassNotFoundException, SQLException, URISyntaxException {
         Connection connection = getConnection();
@@ -102,13 +103,12 @@ public class RecipeList {
         /*Recipe recipe;
         recipe = new Recipe(name, tags, ingre, instru);
         recipes.add(recipe);*/
-        
+
         stm.executeUpdate("INSERT INTO recipes (name,ingredients,instructions,tags) VALUES ('" + name + "','" + ingre + "','" + instru + "','" + tags + "')");
         recipes = getAllRecipes();
         connection.close();
     }
-    
-    
+
     public void deleteRecipe() throws ClassNotFoundException, SQLException, URISyntaxException {
         Connection connection = getConnection();
         Statement stm = connection.createStatement();
@@ -116,7 +116,7 @@ public class RecipeList {
         System.out.println("ID that you want to delete:");
         int id = s.nextInt();
         Recipe recipe = searchById(id);
-        if (recipe != null){
+        if (recipe != null) {
             System.out.println("DELETE FROM recipes WHERE id = '" + recipe.getId() + "'");
             stm.executeUpdate("DELETE FROM recipes WHERE id = '" + recipe.getId() + "'");
             //stm.executeQuery("SELECT SETVAL((SELECT pg_get_serial_sequence('recipes', 'id')), 13, false);");
@@ -140,67 +140,70 @@ public class RecipeList {
         }
         return "";
     }
-    
+
     public void suggestRecipe(User user) {                         //suggest
-        
+
         System.out.println("What ingredients you have?");
         Scanner s = new Scanner(System.in);
         String answer = s.nextLine();
-        Queue<Recipe> que = searchHelper(answer,user);
-        
+        Queue<Recipe> que = searchHelper(answer, user);
+
         if (que.isEmpty()) {
             System.out.println("No suggestions based on ingredients!");
             return;
         }
-        
+
         while (true) {
             Recipe recipe = que.poll();
             System.out.println(recipe);
             ArrayList<String> miss = missingIngredients(answer, recipe);
-            if(miss.isEmpty()){
+            if (miss.isEmpty()) {
                 System.out.println("You have all the ingredients.");
-            }else{
+            } else {
                 System.out.println("You are missing the following ingredients: " + miss);
             }
             //System.out.println(que.poll());
             System.out.println("Do you accept this suggestion? Y/N");
-            if (s.nextLine().equalsIgnoreCase("Y")) break;
+            if (s.nextLine().equalsIgnoreCase("Y")) {
+                break;
+            }
             if (que.isEmpty()) {
                 System.out.println("No more suggestions");
                 break;
             }
         }
     }
-    
-    public ArrayList<String> missingIngredients(String ingredients, Recipe recipe){
+
+    public ArrayList<String> missingIngredients(String ingredients, Recipe recipe) {
         ArrayList<String> missing = new ArrayList<>();
         String[] recipeing = recipe.getIngredients().split(",");
         String[] ingre = ingredients.split(",");
         boolean found = false;
         for (String ing : recipeing) {
             for (String ingr : ingre) {
-                if(ing.contains(ingr)){
+                if (ing.contains(ingr)) {
                     found = true;
                 }
             }
-            if(found){
+            if (found) {
                 found = false;
-            }else{
+            } else {
                 missing.add(ing);
             }
         }
-        
+
         return missing;
     }
-    
+
     public Queue<Recipe> searchHelper(String ingridients, User user) {
         Queue<Recipe> resultQue = new LinkedList<Recipe>();
         String[] ing = ingridients.split(",");
         String[] alrg = user.getAllergies().split(",");
-        int bestest = 0;
-        
+        ArrayList<Recipe> recipes1 = new ArrayList<>();
+        //int bestest = 0;
+
         boolean badRecipe = false;
-        
+
         for (Recipe recipe : recipes) {
             badRecipe = false;
             for (String string : alrg) {
@@ -210,19 +213,26 @@ public class RecipeList {
                 }
             }
             if (!badRecipe) {
-            int secondBestest = 0;
-            for (int i = 0; i < ing.length; i++) {
-                if (recipe.getIngredients().contains(ing[i])) {
-                    secondBestest++;
+                int score = 0;
+                for (int i = 0; i < ing.length; i++) {
+                    if (recipe.getIngredients().contains(ing[i])) {
+                        score++;
+                    }
                 }
+                recipe.setScoreGiven(score);
+                recipes1.add(recipe);
+                
+                /*if (secondBestest >= bestest) {
+                    bestest = secondBestest;
+                    Collections.reverse((List<?>) resultQue);
+                    resultQue.add(recipe);
+                    Collections.reverse((List<?>) resultQue);
+                }*/
             }
-            if (secondBestest >= bestest) {           
-                bestest = secondBestest;
-                Collections.reverse((List<?>) resultQue);
-                resultQue.add(recipe);
-                Collections.reverse((List<?>) resultQue);
-            }
-            }
+        }
+        Collections.sort(recipes1);
+        for (Recipe recipe : recipes1) {
+            resultQue.add(recipe);
         }
         return resultQue;
     }
@@ -240,8 +250,11 @@ public class RecipeList {
             recipe.setId(rst.getInt("id"));
             recipe.setName(rst.getString("name"));
             rstt = rst.getString("ingredients");
-            if (rstt.endsWith(")")) recipe.setIngredients(rstt.substring(1,rstt.length()-1));
-                else recipe.setIngredients(rst.getString("ingredients"));
+            if (rstt.endsWith(")")) {
+                recipe.setIngredients(rstt.substring(1, rstt.length() - 1));
+            } else {
+                recipe.setIngredients(rst.getString("ingredients"));
+            }
             recipe.setInstructions(rst.getString("instructions"));
             recipe.setTags(rst.getString("tags"));
             recipeList.add(recipe);
@@ -249,7 +262,7 @@ public class RecipeList {
         connection.close();
         return recipeList;
     }
-    
+
     public void dropTable() throws URISyntaxException, SQLException, ClassNotFoundException {
         Connection connection = getConnection();
         Statement stm = connection.createStatement();
