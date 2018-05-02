@@ -204,17 +204,17 @@ public class RecipeList {
         Queue<Recipe> resultQue = new LinkedList<Recipe>();
         String[] ing = ingridients.split(",");
         String[] alrg = user.getAllergies().split(",");
-        ArrayList<Recipe> recipes1 = new ArrayList<>();
-        //int bestest = 0;
-
+        ArrayList<Recipe> recipelist = new ArrayList<>();
         boolean badRecipe = false;
 
         for (Recipe recipe : recipes) {
-            badRecipe = false;
-            for (String string : alrg) {
-                if (recipe.getIngredients().contains(string)) {
-                    badRecipe = true;
-                    break;
+            if (!alrg[0].equals("")) {
+                badRecipe = false;
+                for (String string : alrg) {
+                    if (recipe.getIngredients().contains(string)) {
+                        badRecipe = true;
+                        break;
+                    }
                 }
             }
             if (!badRecipe) {
@@ -225,18 +225,11 @@ public class RecipeList {
                     }
                 }
                 recipe.setScoreGiven(score);
-                recipes1.add(recipe);
-                
-                /*if (secondBestest >= bestest) {
-                    bestest = secondBestest;
-                    Collections.reverse((List<?>) resultQue);
-                    resultQue.add(recipe);
-                    Collections.reverse((List<?>) resultQue);
-                }*/
+                recipelist.add(recipe);
             }
         }
-        Collections.sort(recipes1);
-        for (Recipe recipe : recipes1) {
+        Collections.sort(recipelist);
+        for (Recipe recipe : recipelist) {
             resultQue.add(recipe);
         }
         return resultQue;
