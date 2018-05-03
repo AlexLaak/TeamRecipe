@@ -94,6 +94,10 @@ public class Main {
             if(command.equalsIgnoreCase("suggest")){
                 recipelist.suggestRecipe(user);
             }
+            if(command.equalsIgnoreCase("user")){
+                System.out.println("Logged in as: " + user.getUsername());
+                System.out.println("Allergies: " + user.getAllergies());
+            }
             if(command.equalsIgnoreCase("help") || command.equalsIgnoreCase("commands")) {
                 System.out.println("Available commands: list, add, delete, searchtag, "
                         + "searchname, searchid, searching, suggest, exit");
