@@ -167,7 +167,7 @@ public class RecipeList {
             if (s.nextLine().equalsIgnoreCase("Y")) {
                 System.out.println("");
                 System.out.println("Recipe name: " + recipe.getName());
-                System.out.println("Recipe ingridients: " + recipe.getIngredients());
+                System.out.println("Recipe ingredients: " + recipe.getIngredients());
                 System.out.println("Recipe instructions: " + recipe.getInstructions());
                 System.out.println("Recipe tags: " + recipe.getTags());
                 break;
