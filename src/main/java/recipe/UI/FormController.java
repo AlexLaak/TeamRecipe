@@ -5,23 +5,56 @@
  */
 package main.java.recipe.UI;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-import javafx.fxml.Initializable;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
+import javafx.fxml.FXML;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 
 /**
  * FXML Controller class
  *
  * @author Kenji Fam
  */
-public class FormController implements Initializable {
+public class FormController {
 
-    /**
-     * Initializes the controller class.
-     */
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-    }    
+    @FXML
+    private TextField nameField;
+
+    @FXML
+    private TextField ingredientsField;
+
+    @FXML
+    private TextArea instructionsField;
+
+    @FXML
+    private TextField tagsField;
+
+    public void addRecipe() throws URISyntaxException, SQLException {
+        String name = nameField.getText();
+        String ingredients = ingredientsField.getText();
+        String instructions = instructionsField.getText();
+        String tags = tagsField.getText();
+
+        Connection connection = getConnection();
+        Statement stm = connection.createStatement();
+        stm.executeUpdate("INSERT INTO recipes (name,ingredients,instructions,tags) VALUES ('" + name + "','" + ingredients + "','" + instructions + "','" + tags + "')");
+        
+        connection.close();
+    }
+
     
+    
+    private static Connection getConnection() throws URISyntaxException, SQLException {
+        URI dbUri = new URI("postgres://hkullkvwogqmsk:57f03e071224c52d64f523e55c0105096f73c5e1fc5519ac6e4af2461419ebdd@ec2-54-217-217-142.eu-west-1.compute.amazonaws.com:5432/d1ur8rbqa8ddlp");
+        String username = dbUri.getUserInfo().split(":")[0];
+        String password = dbUri.getUserInfo().split(":")[1];
+        String dbUrl = "jdbc:postgresql://" + dbUri.getHost() + dbUri.getPath() + "?ssl=true&sslfactory=org.postgresql.ssl.NonValidatingFactory";
+
+        return DriverManager.getConnection(dbUrl, username, password);
+    }
 }

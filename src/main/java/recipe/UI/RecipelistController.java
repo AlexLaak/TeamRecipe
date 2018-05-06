@@ -82,23 +82,23 @@ public class RecipelistController {
     public void initialize() throws ClassNotFoundException, SQLException, URISyntaxException {
         recipelist = new RecipeList();
         recipeArray = Controller.getRecipeArray();
-        boxRecipe = showList(recipeArray, boxRecipe);
+        showList();
+        showRecipe(recipeArray.get(recipeArray.size() - 1));
     }
     
-    private VBox showList(ArrayList<Recipe> recipeArray, VBox vb) {
+    public void showList() {
         recipeArray.forEach(rcp -> {
             VBox rcpBox = new VBox();
             Text rcpTitle = new Text("Recipe #" + rcp.getId() + " " + rcp.getName());
             Text rcpTags = new Text("\tTags: " + rcp.getTags());
             rcpBox.getChildren().addAll(rcpTitle, rcpTags);
             rcpBox.setOnMouseClicked(event -> showRecipe(rcp));
-            vb.getChildren().add(rcpBox);
+            boxRecipe.getChildren().add(rcpBox);
             VBox.setMargin(rcpBox, new Insets(10, 0, 20, 10));
         });
-        return vb;
     }
     
-    private void showRecipe(Recipe rcp) {
+    public void showRecipe(Recipe rcp) {
         idLabel.setText("Recipe ID");
         tagsLabel.setText("Tags");
         ingredientsLabel.setText("Ingredients");
@@ -113,8 +113,9 @@ public class RecipelistController {
     
     public void showAddRecipeForm() throws IOException {
         Pane listPane = FXMLLoader.load(getClass().getResource("form.fxml"));
-        //secondAnchor.getChildren().clear();
+        secondAnchor.getChildren().clear();
         secondAnchor.getChildren().add(listPane); 
     }
+    
     
 }

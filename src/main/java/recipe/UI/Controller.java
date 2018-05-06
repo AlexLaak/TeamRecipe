@@ -57,7 +57,7 @@ public class Controller{
     }
     
     @FXML
-    public void showAddRecipe() throws IOException {
+    public void showAddRecipe() throws IOException, URISyntaxException, SQLException, ClassNotFoundException {
         Dialog<ButtonType> dialog = new Dialog<ButtonType>();
         dialog.initOwner(mainPanel.getScene().getWindow());
         dialog.setTitle("Add New Recipe");
@@ -77,9 +77,14 @@ public class Controller{
 
         Optional<ButtonType> result = dialog.showAndWait();
         
-        
+        if(result.isPresent() && result.get() == ButtonType.OK) {
+            FormController formController = fxmlLoader.getController();
+            formController.addRecipe();
+            recipeArray = RecipeList.getAllRecipes();
+            
+            showListRecipe();
+            
+        }
     }
-
-    
-    
+  
 }
