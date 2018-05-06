@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.image.ImageView?>
@@ -13,7 +15,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" prefHeight="560.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.recipe.UI.RecipelistController">
+<AnchorPane fx:id="mainPane" prefHeight="560.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.recipe.UI.RecipelistController">
    <children>
       <SplitPane dividerPositions="0.3182957393483709" layoutX="288.0" layoutY="172.0" prefHeight="560.0" prefWidth="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <items>
@@ -83,6 +85,12 @@
                         </HBox>
                      </children>
                   </GridPane>
+                  <ButtonBar layoutX="328.0" layoutY="504.0" prefHeight="40.0" prefWidth="200.0">
+                    <buttons>
+                        <Button fx:id="btn_edit" mnemonicParsing="false" text="Edit" />
+                        <Button fx:id="btn_delete" mnemonicParsing="false" text="Delete" />
+                    </buttons>
+                  </ButtonBar>
                </children>
             </AnchorPane>
         </items>
