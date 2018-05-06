@@ -5,15 +5,19 @@
  */
 package main.java.recipe.UI;
 
+import java.io.IOException;
 import java.net.URISyntaxException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import main.java.recipe.Recipe;
@@ -59,6 +63,12 @@ public class RecipelistController {
     @FXML
     private ImageView recipeImage;
     
+    @FXML
+    private AnchorPane firstAnchor;
+    
+    @FXML
+    private AnchorPane secondAnchor;
+    
     private RecipeList recipelist;
     
     private ArrayList<Recipe> recipeArray;
@@ -99,6 +109,12 @@ public class RecipelistController {
         ingredients.setText(rcp.getIngredients());
         instructions.setText(rcp.getInstructions());
         recipeImage.setImage(new Image(MainUI.class.getResourceAsStream("recipe.jpg")));
+    }
+    
+    public void showAddRecipeForm() throws IOException {
+        Pane listPane = FXMLLoader.load(getClass().getResource("form.fxml"));
+        //secondAnchor.getChildren().clear();
+        secondAnchor.getChildren().add(listPane); 
     }
     
 }

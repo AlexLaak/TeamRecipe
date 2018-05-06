@@ -17,12 +17,12 @@
    <children>
       <SplitPane dividerPositions="0.3182957393483709" layoutX="288.0" layoutY="172.0" prefHeight="560.0" prefWidth="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <items>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+          <AnchorPane fx:id="firstAnchor" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                <children>
                   <VBox fx:id="boxRecipe" layoutX="97.0" layoutY="90.0" prefHeight="558.0" prefWidth="251.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                </children>
             </AnchorPane>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+          <AnchorPane fx:id="secondAnchor" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                <children>
                   <GridPane hgap="50.0" layoutX="59.0" layoutY="30.0" prefHeight="558.0" prefWidth="541.0" vgap="10.0" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
                     <columnConstraints>
