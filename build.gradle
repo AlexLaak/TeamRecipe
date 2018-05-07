@@ -8,25 +8,6 @@
 apply plugin: 'java'
 apply plugin: 'application'
 
-jfx {
-    // minimal requirement for jfxJar-task
-    mainClass = 'src.main.java.recipe.UI.MainUI'
-    
-    // minimal requirement for jfxNative-task
-    vendor = 'fifthrecipe'
-}
-
-buildscript {
-    dependencies {
-        classpath group: 'de.dynamicfiles.projects.gradle.plugins', name: 'javafx-gradle-plugin', version: '8.8.2'
-    }
-    repositories {
-        mavenLocal()
-        mavenCentral()
-
-    }
-}
-apply plugin: 'javafx-gradle-plugin'
 
 
 //Get dependencies from Maven central repository
@@ -37,10 +18,9 @@ repositories {
 //Project dependencies
 dependencies {
 	compile 'postgresql:postgresql:9.1-901-1.jdbc4'
-	classpath group: 'de.dynamicfiles.projects.gradle.plugins', name: 'javafx-gradle-plugin', version: '8.8.2'
 }
 
-mainClassName = 'main.java.recipe.UI.MainUI'
+mainClassName = 'main.java.recipe.Main'
 
 run {
 	standardInput = System.in
