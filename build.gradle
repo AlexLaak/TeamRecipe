@@ -9,6 +9,14 @@ apply plugin: 'java'
 apply plugin: 'application'
 apply plugin: 'javafx-gradle-plugin'
 
+jfx {
+    // minimal requirement for jfxJar-task
+    mainClass = 'main.java.recipe.UI.MainUI'
+    
+    // minimal requirement for jfxNative-task
+    vendor = 'fifthrecipe'
+}
+
 //Get dependencies from Maven central repository
 repositories {
     mavenCentral()
