@@ -4,6 +4,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -21,7 +22,11 @@
         <items>
           <AnchorPane fx:id="firstAnchor" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                <children>
-                  <VBox fx:id="boxRecipe" layoutX="97.0" layoutY="90.0" prefHeight="558.0" prefWidth="251.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  <ScrollPane hbarPolicy="NEVER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <content>
+                        <VBox fx:id="boxRecipe" prefHeight="558.0" prefWidth="251.0" />
+                     </content>
+                  </ScrollPane>
                </children>
             </AnchorPane>
           <AnchorPane fx:id="secondAnchor" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
@@ -85,7 +90,7 @@
                         </HBox>
                      </children>
                   </GridPane>
-                  <ButtonBar layoutX="328.0" layoutY="504.0" prefHeight="40.0" prefWidth="200.0">
+                  <ButtonBar layoutX="328.0" layoutY="504.0" prefHeight="40.0" prefWidth="200.0" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="13.0">
                     <buttons>
                         <Button fx:id="btn_edit" mnemonicParsing="false" text="Edit" />
                         <Button fx:id="btn_delete" mnemonicParsing="false" text="Delete" />

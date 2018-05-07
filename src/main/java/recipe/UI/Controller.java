@@ -17,6 +17,9 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 
 /**
  * FXML Controller class
@@ -29,7 +32,7 @@ public class Controller{
     private BorderPane mainPanel;
     
     @FXML
-    private Pane contentPanel;
+    private StackPane contentPanel;
     
     private RecipeList recipelist;
     
@@ -40,6 +43,7 @@ public class Controller{
      */
     public void initialize() throws ClassNotFoundException, SQLException, URISyntaxException {
         recipeArray = RecipeList.getAllRecipes();
+        showHome();
     }
     
     public static ArrayList<Recipe> getRecipeArray() {
@@ -82,5 +86,13 @@ public class Controller{
             showListRecipe(); 
         }
     }
-  
+    
+    @FXML
+    public void showHome() {
+        Text scenetitle = new Text("WELCOME TO FIFTH RECIPE");
+        scenetitle.setId("welcome-text");
+        scenetitle.setFont(Font.font("Arial", 30.0));
+        contentPanel.getChildren().clear();
+        contentPanel.getChildren().add(scenetitle);
+    } 
 }
