@@ -10,7 +10,7 @@ apply plugin: 'application'
 
 jfx {
     // minimal requirement for jfxJar-task
-    mainClass = 'main.java.recipe.UI.MainUI'
+    mainClass = 'src.main.java.recipe.UI.MainUI'
     
     // minimal requirement for jfxNative-task
     vendor = 'fifthrecipe'
