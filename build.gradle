@@ -20,11 +20,13 @@ jfx {
 //Get dependencies from Maven central repository
 repositories {
     mavenCentral()
+	mavenLocal()
 }
 
 //Project dependencies
 dependencies {
 	compile 'postgresql:postgresql:9.1-901-1.jdbc4'
+	classpath group: 'de.dynamicfiles.projects.gradle.plugins', name: 'javafx-gradle-plugin', version: '8.8.2'
 }
 
 mainClassName = 'main.java.recipe.UI.MainUI'
