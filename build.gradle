@@ -7,6 +7,7 @@
 
 apply plugin: 'java'
 apply plugin: 'application'
+apply plugin: 'javafx-gradle-plugin'
 
 //Get dependencies from Maven central repository
 repositories {
