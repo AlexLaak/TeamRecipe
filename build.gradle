@@ -7,7 +7,6 @@
 
 apply plugin: 'java'
 apply plugin: 'application'
-apply plugin: 'javafx-gradle-plugin'
 
 jfx {
     // minimal requirement for jfxJar-task
@@ -17,10 +16,22 @@ jfx {
     vendor = 'fifthrecipe'
 }
 
+buildscript {
+    dependencies {
+        classpath group: 'de.dynamicfiles.projects.gradle.plugins', name: 'javafx-gradle-plugin', version: '8.8.2'
+    }
+    repositories {
+        mavenLocal()
+        mavenCentral()
+
+    }
+}
+apply plugin: 'javafx-gradle-plugin'
+
+
 //Get dependencies from Maven central repository
 repositories {
     mavenCentral()
-	mavenLocal()
 }
 
 //Project dependencies
