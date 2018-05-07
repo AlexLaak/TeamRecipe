@@ -17,6 +17,8 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -133,6 +135,15 @@ public class RecipeList {
 
     @Override
     public String toString() {
+        try {
+            recipes = getAllRecipes();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(RecipeList.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(RecipeList.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (URISyntaxException ex) {
+            Logger.getLogger(RecipeList.class.getName()).log(Level.SEVERE, null, ex);
+        }
         for (Recipe recipe : recipes) {
             System.out.println(recipe);
         }
