@@ -35,7 +35,6 @@ public class Controller{
     
     private static ArrayList<Recipe> recipeArray;
     
-
     /**
      * Initializes the controller class.
      */
@@ -76,14 +75,11 @@ public class Controller{
         dialog.getDialogPane().getButtonTypes().add(ButtonType.CANCEL);
 
         Optional<ButtonType> result = dialog.showAndWait();
-        
         if(result.isPresent() && result.get() == ButtonType.OK) {
             FormController formController = fxmlLoader.getController();
             formController.addRecipe();
             recipeArray = RecipeList.getAllRecipes();
-            
-            showListRecipe();
-            
+            showListRecipe(); 
         }
     }
   

@@ -7,7 +7,9 @@ package main.java.recipe.UI;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.logging.Level;
@@ -16,6 +18,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
@@ -130,6 +133,9 @@ public class RecipelistController {
                 Logger.getLogger(RecipelistController.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
+        btn_delete.setOnAction(event -> {
+            deleteRecipe(rcp);
+        });
     }
     
     public void showAddRecipeForm() throws IOException {
@@ -177,4 +183,23 @@ public class RecipelistController {
         }
     }
     
+    public void deleteRecipe(Recipe rcp) {
+        Alert alert = new Alert(AlertType.CONFIRMATION, "Are you sure you want to delete this recipe?");
+        alert.showAndWait()
+                .filter(response -> response == ButtonType.OK)
+                .ifPresent(response -> {
+            try {
+                Connection connection = FormController.getConnection();
+                Statement stm = connection.createStatement();
+                stm.executeUpdate("DELETE FROM recipes WHERE id = '" + rcp.getId() + "'");
+                recipeArray = RecipeList.getAllRecipes();
+                recipeArray.sort((Recipe o1, Recipe o2) -> o1.getId() - o2.getId());
+                showList();
+                showRecipe(recipeArray.get(recipeArray.size() - 1));
+                connection.close();
+            } catch (URISyntaxException | SQLException | ClassNotFoundException ex) {
+                Logger.getLogger(RecipelistController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
+    }
 }
