@@ -115,7 +115,7 @@ public class RecipeList {
         int id = s.nextInt();
         Recipe recipe = searchById(id);
         if (recipe != null) {
-            System.out.println("DELETE FROM recipes WHERE id = '" + recipe.getId() + "'");
+            //System.out.println("DELETE FROM recipes WHERE id = '" + recipe.getId() + "'");
             stm.executeUpdate("DELETE FROM recipes WHERE id = '" + recipe.getId() + "'");
             //stm.executeQuery("SELECT SETVAL((SELECT pg_get_serial_sequence('recipes', 'id')), 13, false);");
             int max = 0;
