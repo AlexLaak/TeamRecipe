@@ -14,7 +14,6 @@
             <Button mnemonicParsing="false" onAction="#showHome" prefWidth="61.0" text="Home" />
             <Button mnemonicParsing="false" onAction="#showListRecipe" prefWidth="61.0" text="List" />
             <Button mnemonicParsing="false" onAction="#showAddRecipe" prefWidth="61.0" text="Add" />
-            <Button mnemonicParsing="false" prefWidth="61.0" text="Search" />
             <Button mnemonicParsing="false" prefWidth="61.0" text="Suggest" />
             <Button mnemonicParsing="false" prefWidth="61.0" text="User" />
             <Button mnemonicParsing="false" text="Sign out" />

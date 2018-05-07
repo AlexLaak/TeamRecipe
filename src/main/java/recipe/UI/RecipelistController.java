@@ -23,6 +23,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -84,6 +87,27 @@ public class RecipelistController {
     @FXML
     private AnchorPane secondAnchor;
     
+    @FXML
+    private TextField searchField;
+    
+    @FXML
+    private RadioButton radiobtn_id;
+    
+    @FXML
+    private RadioButton radiobtn_name;
+    
+    @FXML
+    private RadioButton radiobtn_ingre;
+    
+    @FXML
+    private RadioButton radiobtn_tags;
+    
+    @FXML
+    private MenuItem menubtn_newest;
+    
+    @FXML
+    private MenuItem radiobtn_mostviewed;
+    
     private RecipeList recipelist;
     
     private ArrayList<Recipe> recipeArray;
@@ -98,11 +122,11 @@ public class RecipelistController {
         recipelist = new RecipeList();
         recipeArray = RecipeList.getAllRecipes();
         recipeArray.sort((Recipe o1, Recipe o2) -> o1.getId() - o2.getId());  // After update the recipe go to the end of the list in database -> need sort
-        showList();
+        showList(recipeArray);
         showRecipe(recipeArray.get(recipeArray.size() - 1));
     }
     
-    public void showList() {
+    public void showList(ArrayList<Recipe> recipeArray) {
         boxRecipe.getChildren().clear();
         recipeArray.forEach(rcp -> {
             VBox rcpBox = new VBox();
@@ -178,7 +202,7 @@ public class RecipelistController {
             rcp = formController.updateRecipe(rcp);
             recipeArray = RecipeList.getAllRecipes();
             recipeArray.sort((Recipe o1, Recipe o2) -> o1.getId() - o2.getId());
-            showList();
+            showList(recipeArray);
             showRecipe(rcp);
         }
     }
@@ -194,12 +218,84 @@ public class RecipelistController {
                 stm.executeUpdate("DELETE FROM recipes WHERE id = '" + rcp.getId() + "'");
                 recipeArray = RecipeList.getAllRecipes();
                 recipeArray.sort((Recipe o1, Recipe o2) -> o1.getId() - o2.getId());
-                showList();
+                showList(recipeArray);
                 showRecipe(recipeArray.get(recipeArray.size() - 1));
                 connection.close();
             } catch (URISyntaxException | SQLException | ClassNotFoundException ex) {
                 Logger.getLogger(RecipelistController.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
+    }
+    
+    
+    @FXML
+    public void search() {
+        ArrayList<Recipe> list = new ArrayList<>();
+        String search = searchField.getText();
+        if (radiobtn_id.isSelected()) list = searchById(search);
+        if (radiobtn_name.isSelected()) list = searchByName(search);
+        if (radiobtn_tags.isSelected()) list = searchByTags(search);
+        if (radiobtn_ingre.isSelected()) list = searchByIngrdients(search);
+        if (!list.isEmpty()) {
+            secondAnchor.setVisible(true);
+            showList(list);
+            showRecipe(list.get(0));
+        } else {
+            boxRecipe.getChildren().clear();
+            Text txt = new Text("Your search \" " + search + " \" did not match any recipes");
+            txt.wrappingWidthProperty().bind(boxRecipe.widthProperty());
+            boxRecipe.getChildren().add(txt);
+            secondAnchor.setVisible(false);
+        }
+    }
+    
+    public ArrayList<Recipe> searchById(String search) {
+        ArrayList<Recipe> list = new ArrayList<>();
+        recipeArray.forEach((Recipe rcp) -> {
+            if (search.equals("" + rcp.getId())) list.add(rcp);
+        });
+        return list;
+    }
+    
+    public ArrayList<Recipe> searchByName(String search) {
+        ArrayList<Recipe> list = new ArrayList<>();
+        recipeArray.forEach((Recipe rcp) -> {
+            if (rcp.getName().toLowerCase().contains(search.toLowerCase())) list.add(rcp);
+        });
+        return list;
+    }
+    
+    public ArrayList<Recipe> searchByTags(String search) {
+        ArrayList<Recipe> list = new ArrayList<>();
+        String[] tags = search.split(",");
+        for (int i = 0; i < tags.length; i++) tags[i] = tags[i].toLowerCase().trim();
+        recipeArray.forEach((Recipe rcp) -> {
+            for (int i = 0; i < tags.length; i++) {
+                if (!rcp.getTags().toLowerCase().contains(tags[i])) {
+                    break;
+                }
+                if (i == tags.length - 1 && rcp.getTags().toLowerCase().contains(tags[i])) {
+                    list.add(rcp);
+                }
+            }
+        });
+        return list;
+    }
+    
+    public ArrayList<Recipe> searchByIngrdients(String search) {
+        ArrayList<Recipe> list = new ArrayList<>();
+        String[] ingres = search.split(",");
+        for (int i = 0; i < ingres.length; i++) ingres[i] = ingres[i].toLowerCase().trim();
+        recipeArray.forEach((Recipe rcp) -> {
+            for (int i = 0; i < ingres.length; i++) {
+                if (!rcp.getIngredients().toLowerCase().contains(ingres[i])) {
+                    break;
+                }
+                if (i == ingres.length - 1 && rcp.getIngredients().toLowerCase().contains(ingres[i])) {
+                    list.add(rcp);
+                }
+            }
+        });
+        return list;
     }
 }
