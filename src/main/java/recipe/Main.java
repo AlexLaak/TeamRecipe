@@ -20,6 +20,9 @@ public class Main {
         User user = null;
 
         String command;
+        for(int i = 0; i < 10;i++){
+            System.out.println("");
+        }
         System.out.println("Welcome to recipe application");
 
         while (user == null) {
