@@ -285,9 +285,11 @@ public class RecipeList {
             stm.executeUpdate("DROP TABLE IF EXISTS recipes");
             stm.executeUpdate("CREATE TABLE recipes (ID SERIAL, name varchar(255), ingredients varchar(1000), instructions varchar(10000), tags varchar(1000))");
             System.out.println("Table recipes dropped and created again");
-        } else {
+        }
+        if(num != 1 && num != 2){
             System.out.println("Dropping cancelled");
         }
+        
         recipes = getAllRecipes();
         connection.close();
     }
