@@ -1,14 +1,10 @@
 package main.java.recipe;
 
-
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
-
 import java.util.Scanner;
 
 /**
@@ -25,7 +21,7 @@ public class Main {
 
         String command;
         System.out.println("Welcome to recipe application");
-        
+
         while (user == null) {
             System.out.println("Do you have an account? (Y/N)");
             command = sc.nextLine();
@@ -36,6 +32,67 @@ public class Main {
                 for (int i = 0; i < 2; i++) { //3 attempts for login
                     if (user != null) {
                         System.out.println("Login successful!");
+                        while (true) {
+                            System.out.println("\nGive command:");
+                            command = sc.nextLine();
+                            if (command.equalsIgnoreCase("list")) {
+                                System.out.println(recipelist);
+                            }
+                            if (command.equalsIgnoreCase("add")) {
+                                recipelist.addRecipe();
+                            }
+                            if (command.equalsIgnoreCase("delete")) {
+                                recipelist.deleteRecipe();
+                            }
+                            if (command.equalsIgnoreCase("searchtag")) {
+                                System.out.println("Give recipe tags");
+                                String tags = sc.nextLine();
+                                recipelist.searchByTags(tags);
+                            }
+                            if (command.equalsIgnoreCase("searchname")) {
+                                System.out.println("Give recipe name");
+                                String name = sc.nextLine();
+                                recipelist.searchByName(name);
+                            }
+                            if (command.equalsIgnoreCase("searchid")) {
+                                System.out.println("Give recipe id ");
+                                int ii = Integer.parseInt(sc.nextLine());
+                                Recipe recipe = recipelist.searchById(ii);
+                                if (recipe == null) {
+                                    System.out.println("There is no recipe with that ID");
+                                } else {
+                                    System.out.println(recipe);
+                                }
+                            }
+                            if (command.equalsIgnoreCase("searching")) {
+                                System.out.println("Give ingredients");
+                                String ingredients = sc.nextLine();
+                                for (Recipe recipe : recipelist.searchByIngredients(ingredients)) {
+                                    System.out.println(recipe);
+                                }
+                            }
+                            if (command.equalsIgnoreCase("suggest")) {
+                                recipelist.suggestRecipe(user);
+                            }
+                            if (command.equalsIgnoreCase("user")) {
+                                System.out.println("Logged in as: " + user.getUsername());
+                                System.out.println("Allergies: " + user.getAllergies());
+                            }
+                            if (command.equalsIgnoreCase("help") || command.equalsIgnoreCase("commands")) {
+                                System.out.println("Available commands: list, add, delete, searchtag, "
+                                        + "searchname, searchid, searching, suggest, exit, logout, user");
+                            }
+                            if (command.equalsIgnoreCase("exit")) {
+                                System.exit(0);
+                            }
+                            if(command.equalsIgnoreCase("logout")){
+                                break;
+                            }
+                            if (command.equalsIgnoreCase("drop1337ez")) {
+                                recipelist.dropTable();
+                            }
+                        }
+                        user = null;
                         break;
                     }
                     System.out.println("Wrong username or password!");
@@ -49,64 +106,6 @@ public class Main {
                 if (status == 1) {
                     System.out.println("Register successfully!");
                 }
-            }
-        }
-        
-        while (true) {
-            System.out.println("\nGive command:");
-            command = sc.nextLine();
-            if (command.equalsIgnoreCase("list")) {
-                System.out.println(recipelist);
-            }
-            if(command.equalsIgnoreCase("add")) {
-                recipelist.addRecipe();
-            }
-            if (command.equalsIgnoreCase("delete")) {
-                recipelist.deleteRecipe();
-            }
-            if(command.equalsIgnoreCase("searchtag")){
-                System.out.println("Give recipe tags");
-                String tags = sc.nextLine();
-                recipelist.searchByTags(tags);
-            }
-            if(command.equalsIgnoreCase("searchname")){
-                System.out.println("Give recipe name");
-                String name = sc.nextLine();
-                recipelist.searchByName(name);
-            }
-            if(command.equalsIgnoreCase("searchid")){
-                System.out.println("Give recipe id ");
-                int i = Integer.parseInt(sc.nextLine());
-                Recipe recipe = recipelist.searchById(i);
-                if (recipe == null) {
-                    System.out.println("There is no recipe with that ID");
-                } else {
-                    System.out.println(recipe);
-                }
-            }
-            if(command.equalsIgnoreCase("searching")){
-                System.out.println("Give ingredients");
-                String ingredients= sc.nextLine();
-                for (Recipe recipe : recipelist.searchByIngredients(ingredients)) {
-                    System.out.println(recipe);
-                }
-            }
-            if(command.equalsIgnoreCase("suggest")){
-                recipelist.suggestRecipe(user);
-            }
-            if(command.equalsIgnoreCase("user")){
-                System.out.println("Logged in as: " + user.getUsername());
-                System.out.println("Allergies: " + user.getAllergies());
-            }
-            if(command.equalsIgnoreCase("help") || command.equalsIgnoreCase("commands")) {
-                System.out.println("Available commands: list, add, delete, searchtag, "
-                        + "searchname, searchid, searching, suggest, exit");
-            }
-            if(command.equalsIgnoreCase("exit")) {
-                break;
-            }
-            if(command.equalsIgnoreCase("drop1337ez")) {
-                recipelist.dropTable();
             }
         }
 
