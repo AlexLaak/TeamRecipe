@@ -13,6 +13,9 @@ import java.util.ArrayList;
 import java.util.Optional;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 import javafx.scene.layout.BorderPane;
@@ -20,6 +23,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -94,5 +98,25 @@ public class Controller{
         scenetitle.setFont(Font.font("Arial", 30.0));
         contentPanel.getChildren().clear();
         contentPanel.getChildren().add(scenetitle);
-    } 
+    }
+    
+    @FXML
+    private void signout() {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Do you want to sign out?");
+        alert.showAndWait()
+                .filter(response -> response == ButtonType.OK)
+                .ifPresent(response -> {
+            try {
+                FXMLLoader fxmlLoader = new FXMLLoader();
+                fxmlLoader.setLocation(getClass().getResource("login.fxml"));
+                Parent root = fxmlLoader.load();
+                LoginController loginController = fxmlLoader.getController();
+                loginController.signout();
+                Stage stage = (Stage) mainPanel.getScene().getWindow();
+                stage.setScene(new Scene(root, 800, 600));
+            } catch (IOException ex) {
+                System.out.println(ex);
+            }
+        });
+    }
 }

@@ -16,7 +16,7 @@
             <Button mnemonicParsing="false" onAction="#showAddRecipe" prefWidth="61.0" text="Add" />
             <Button mnemonicParsing="false" prefWidth="61.0" text="Suggest" />
             <Button mnemonicParsing="false" prefWidth="61.0" text="User" />
-            <Button mnemonicParsing="false" text="Sign out" />
+            <Button mnemonicParsing="false" onAction="#signout" text="Sign out" />
         </items>
       </ToolBar>
    </top>

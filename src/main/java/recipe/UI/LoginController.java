@@ -78,7 +78,7 @@ public class LoginController {
         user = checkUser();
             if (user != null) {
                 try {
-                    actiontarget.setText("Login successful!");
+                    actiontarget.setText("Sign in successful!");
                     Parent root = FXMLLoader.load(getClass().getResource("main.fxml"));
                     Stage stage = (Stage) grid.getScene().getWindow();
                     stage.setScene(new Scene(root, 800, 600));
@@ -147,6 +147,10 @@ public class LoginController {
         } catch (URISyntaxException | SQLException e) {
             System.out.println(e);
         }
+    }
+    
+    public void signout() {
+        actiontarget.setText("Sign out successful!");
     }
     
     private static Connection getConnection() throws URISyntaxException, SQLException {

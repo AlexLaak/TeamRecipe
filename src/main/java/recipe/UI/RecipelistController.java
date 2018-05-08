@@ -223,7 +223,7 @@ public class RecipelistController {
                 showRecipe(recipeArray.get(recipeArray.size() - 1));
                 connection.close();
             } catch (URISyntaxException | SQLException | ClassNotFoundException ex) {
-                Logger.getLogger(RecipelistController.class.getName()).log(Level.SEVERE, null, ex);
+                System.out.println(ex);
             }
         });
     }
