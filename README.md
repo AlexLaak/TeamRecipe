@@ -7,5 +7,7 @@ Users can also edit their allergies that they don't see the recipes with allergi
 If you have more questions about our applications email us at taturi@metropolia.fi
 
 # Download application
-Download, extract and run the .jar file
 https://goo.gl/WBTJtf
+
+We distribute our application with an .jar file so it's cross-platform and can run on any OS with JRE installed.
+Download the zip file, extract and run the Recipe.jar
