@@ -185,6 +185,7 @@ public class RecipelistController {
         fxmlLoader.setLocation(getClass().getResource("form.fxml"));
         try {
             dialog.getDialogPane().setContent(fxmlLoader.load());
+            dialog.setHeaderText("Change here the information for editing recipe");
         } catch (IOException e) {
             System.out.println("Couldn't load the dialog");
             e.printStackTrace();

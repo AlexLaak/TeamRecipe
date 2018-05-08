@@ -13,14 +13,18 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Optional;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Dialog;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import main.java.recipe.User;
@@ -33,6 +37,9 @@ import main.java.recipe.User;
 public class LoginController {
     
     @FXML
+    private StackPane loginPane;
+    
+    @FXML
     private GridPane grid;
     
     @FXML
@@ -42,13 +49,16 @@ public class LoginController {
     private PasswordField passwordField;
     
     @FXML
-    private Button btn_signin;
+    private Text actiontarget;
     
     @FXML
-    private Button btn_register;
-
+    private TextField username_reg;
+    
     @FXML
-    private Text actiontarget;
+    private PasswordField password_reg;
+    
+    @FXML
+    private TextField allergies_reg;
     
     private static User user;
 
@@ -56,8 +66,16 @@ public class LoginController {
      * Initializes the controller class.
      */
     public void initialize() {
-        btn_signin.setOnAction(event -> {
-            user = login();
+        
+    }
+
+    public static User getUser() {
+        return user;
+    }
+    
+    @FXML
+    private void login() {
+        user = checkUser();
             if (user != null) {
                 try {
                     actiontarget.setText("Login successful!");
@@ -69,14 +87,9 @@ public class LoginController {
                 }
             }
             else actiontarget.setText("Wrong username or password!");
-        });
-    }
-
-    public static User getUser() {
-        return user;
     }
     
-    private User login() {
+    private User checkUser() {
         boolean status = false;
         try{
             String username = usernameField.getText();
@@ -93,6 +106,47 @@ public class LoginController {
             System.out.println(e);
         }
         return null;
+    }
+    
+    @FXML
+    private void showRegister() throws IOException, URISyntaxException, SQLException, ClassNotFoundException {
+        Dialog<ButtonType> dialog = new Dialog<>();
+        dialog.initOwner(loginPane.getScene().getWindow());
+        dialog.setTitle("Register");
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(getClass().getResource("register.fxml"));
+        try {
+            dialog.getDialogPane().setContent(fxmlLoader.load());
+            dialog.setHeaderText("Fill in the form below to create new account");
+        } catch(IOException e) {
+            System.out.println("Couldn't load the dialog");
+            e.printStackTrace();
+            return;
+        }
+        
+        ButtonType reg = new ButtonType("Create new account", ButtonBar.ButtonData.OK_DONE);
+        dialog.getDialogPane().getButtonTypes().add(reg);
+        dialog.getDialogPane().getButtonTypes().add(ButtonType.CANCEL);
+
+        Optional<ButtonType> result = dialog.showAndWait();
+        if(result.isPresent() && result.get() == reg) {
+            LoginController loginController = fxmlLoader.getController();
+            loginController.register();
+        }
+    }
+    
+    private void register() {
+        try {
+            Connection connection = getConnection();
+            Statement stm = connection.createStatement();
+            String username = username_reg.getText();
+            String password = password_reg.getText();
+            String allergies = allergies_reg.getText();
+            stm.executeUpdate("INSERT INTO users (username, password, allergies) VALUES ('" + username + "','" + password + "','" + allergies + "')");
+            connection.close();
+        } catch (URISyntaxException | SQLException e) {
+            System.out.println(e);
+        }
     }
     
     private static Connection getConnection() throws URISyntaxException, SQLException {

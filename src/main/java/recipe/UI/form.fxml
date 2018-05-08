@@ -12,9 +12,6 @@
 <?import javafx.scene.text.Font?>
 
 <DialogPane fx:controller="main.java.recipe.UI.FormController" xmlns:fx="http://javafx.com/fxml">
-    <headerText>
-        Fill in the information for adding new recipe
-    </headerText>
     <content>
         <GridPane  hgap="50.0" prefHeight="558.0" prefWidth="541.0" vgap="10.0" >
             <columnConstraints>
