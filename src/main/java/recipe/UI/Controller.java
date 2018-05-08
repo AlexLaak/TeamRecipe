@@ -101,6 +101,13 @@ public class Controller{
     }
     
     @FXML
+    public void showUser() throws IOException {
+        Pane userPane = FXMLLoader.load(getClass().getResource("userpage.fxml"));
+        contentPanel.getChildren().clear();
+        contentPanel.getChildren().add(userPane); 
+    }
+    
+    @FXML
     private void signout() {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Do you want to sign out?");
         alert.showAndWait()
