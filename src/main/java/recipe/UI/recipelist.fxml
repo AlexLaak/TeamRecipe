@@ -85,15 +85,11 @@
                               <Insets top="3.0" />
                            </padding>
                         </HBox>
-                        <MenuButton mnemonicParsing="false" text="Sort recipes by" GridPane.columnSpan="4" GridPane.halignment="CENTER" GridPane.rowIndex="2">
-                          <items>
-                            <MenuItem fx:id="menubtn_newest" mnemonicParsing="false" text="Newest" />
-                            <MenuItem fx:id="radiobtn_mostviewed" mnemonicParsing="false" text="Most viewed" />
-                          </items>
+                        <Button fx:id="btn_suggest" mnemonicParsing="false" text="Suggest" GridPane.columnSpan="4" GridPane.halignment="CENTER" GridPane.rowIndex="2">
                            <font>
-                              <Font size="10.0" />
+                              <Font size="12.0" />
                            </font>
-                        </MenuButton>
+                        </Button>
                      </children>
                      <padding>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />

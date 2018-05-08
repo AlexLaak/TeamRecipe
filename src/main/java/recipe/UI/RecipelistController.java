@@ -103,10 +103,7 @@ public class RecipelistController {
     private RadioButton radiobtn_tags;
     
     @FXML
-    private MenuItem menubtn_newest;
-    
-    @FXML
-    private MenuItem radiobtn_mostviewed;
+    private Button btn_suggest;
     
     private RecipeList recipelist;
     
@@ -298,5 +295,9 @@ public class RecipelistController {
             }
         });
         return list;
+    }
+    
+    public void suggest() {
+        
     }
 }
